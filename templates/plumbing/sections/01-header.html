@@ -1,0 +1,26 @@
+<!-- RT: Header + navigation -->
+<header class="pl pl-header" id="pl-header">
+  <a class="pl-skip" href="#pl-hero">Skip to content</a>
+  <div class="pl-wrap pl-header__inner">
+    <a class="pl-brand" href="#pl-hero" aria-label="{{business_name}} home">
+      <svg class="pl-brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M16 3c6 8 9.5 12 9.5 17a9.5 9.5 0 0 1-19 0C6.5 15 10 11 16 3Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M11.5 20.5a4.5 4.5 0 0 0 4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <span class="pl-brand__name">{{business_name}}</span>
+    </a>
+    <button class="pl-menu-btn" type="button" aria-expanded="false" aria-controls="pl-nav" data-pl-menu>
+      <span class="pl-menu-btn__label">Menu</span>
+      <span class="pl-menu-btn__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+    <nav class="pl-nav" id="pl-nav" aria-label="Primary">
+      <ul class="pl-nav__list">
+        <li><a href="#pl-services">Services</a></li>
+        <li><a href="#pl-why">Why Us</a></li>
+{{#if reviews}}
+        <li><a href="#pl-reviews">Reviews</a></li>
+{{/if}}
+        <li><a href="#pl-faq">FAQ</a></li>
+      </ul>
+      <a class="pl-nav__phone" href="tel:{{phone_tel}}">{{phone_display}}</a>
+      <a class="pl-btn pl-btn--primary pl-nav__cta" href="{{cta_href}}">{{cta_label}}</a>
+    </nav>
+  </div>
+</header>

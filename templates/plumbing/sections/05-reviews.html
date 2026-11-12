@@ -1,0 +1,14 @@
+<!--requires:reviews-->
+<!-- RT: Reviews. Only built when real, permissioned reviews are supplied in config. -->
+<section class="pl pl-reviews" id="pl-reviews" aria-labelledby="pl-reviews-title">
+  <div class="pl-wrap">
+    <div class="pl-section-head">
+      <p class="pl-eyebrow">Reviews</p>
+      <h2 class="pl-h2" id="pl-reviews-title">What homeowners say.</h2>
+{{rating_summary_html}}
+    </div>
+    <ul class="pl-reviews__grid">
+{{reviews_list}}
+    </ul>
+  </div>
+</section>

@@ -55,6 +55,7 @@ Optional: `email`, `address`, `hours`, `license_line`, `credentials[]`, `why_us[
 |---|---|---|
 | `roofing` | `node tools/build.mjs roofing --config prospects/<slug>.json` | Charcoal / warm white / copper |
 | `hvac` | `node tools/build.mjs hvac --config prospects/<slug>.json` | Navy / ice / heat-orange, `hv-` prefix. Optional `emergency_line` adds a top bar. Only set it with wording and availability the client has confirmed (don't claim 24/7 unless true). Add `00-topbar.html` as the first Custom Code element when present |
+| `plumbing` | `node tools/build.mjs plumbing --config prospects/<slug>.json` | Deep teal / aqua with amber CTAs, `pl-` prefix, schema type `Plumber`. Same optional `emergency_line` top bar as HVAC (only with client-confirmed wording; never claim 24/7 unless true). The FAQ includes generic leak/gas safety guidance: have the client review it. Plumbing licensing varies by state: add to `credentials[]` only after verifying |
 
 Per-template settings live in its `template.config.json`: `css_prefix`, `schema_type` (schema.org type), `preview_bg`. Hero art is `templates/<t>/hero-visual.html` (replaced by `hero_image_url` when set). HVAC licensing/certification (state license, EPA 608, insurance) varies by state: add to `credentials[]` only after verifying.
 

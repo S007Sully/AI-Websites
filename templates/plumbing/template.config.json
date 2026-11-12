@@ -1,0 +1,78 @@
+{
+  "_note": "Per-prospect values. Every value below is SAMPLE data. Replace with verified details before sharing a preview. Never publish unverified licenses, years in business, reviews or guarantees.",
+  "business_name": "Clearwater Plumbing",
+  "business_short": "Clearwater",
+  "city": "Your City",
+  "service_area": "Your City and surrounding areas",
+  "phone_display": "(555) 010-0199",
+  "phone_tel": "+15550100199",
+  "cta_label": "Request Plumbing Service",
+  "cta_href": "#assessment",
+  "hero_image_url": "",
+  "hero_image_alt": "Plumber repairing a kitchen sink",
+  "trust_points": [
+    "Written quotes before work starts",
+    "Clear explanations, no pressure",
+    "Clean, careful in-home work"
+  ],
+  "email": "",
+  "address": "",
+  "hours": "",
+  "license_line": "",
+  "privacy_url": "",
+  "terms_url": "",
+  "credentials": [],
+  "why_us": [
+    {
+      "title": "Clear diagnosis",
+      "text": "We find the cause and explain it in plain English before recommending anything."
+    },
+    {
+      "title": "Upfront, written quotes",
+      "text": "Scope, parts and pricing in writing before any work begins."
+    },
+    {
+      "title": "Honest repair or replace advice",
+      "text": "You see your options, including when a simple repair is the smarter choice."
+    },
+    {
+      "title": "Respect for your home",
+      "text": "Drop cloths, tidy work and cleanup from the moment we arrive to the moment we leave."
+    }
+  ],
+  "rating_summary": null,
+  "reviews": [],
+  "faqs": [
+    {
+      "q": "What should I do if I find a leak?",
+      "a": "If it is safe to do so, shut off the water at the fixture or the main valve, then call a plumber. If water is near electrical equipment, or you smell gas, leave the area and call emergency services or your utility."
+    },
+    {
+      "q": "Why does my drain keep clogging?",
+      "a": "Repeated clogs can point to buildup, tree roots or damage in the line. A plumber can identify the cause instead of clearing it only temporarily."
+    },
+    {
+      "q": "Should I repair or replace my water heater?",
+      "a": "Age, condition, repair history and your household's hot water needs all matter. We explain the options so you can choose with confidence."
+    },
+    {
+      "q": "How does pricing work?",
+      "a": "You receive a written quote before work starts. The final scope depends on what is found, and any change is discussed with you first."
+    },
+    {
+      "q": "What is a sewer camera inspection?",
+      "a": "A camera inspection lets a technician see inside the line to find blockages or damage before recommending repairs."
+    },
+    {
+      "q": "What areas do you serve?",
+      "a": "We serve {{service_area}}. Not sure if you're in range? Call or send a request and we'll confirm."
+    }
+  ],
+  "form_embed_html": "",
+  "form_heading": "Request plumbing service",
+  "form_intro": "Tell us what's going on and the best way to reach you. We'll follow up to confirm a time.",
+  "css_prefix": "pl",
+  "schema_type": "Plumber",
+  "preview_bg": "#f2faf9",
+  "emergency_line": ""
+}

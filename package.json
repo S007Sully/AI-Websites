@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build:roofing": "node tools/build.mjs roofing",
-    "build:hvac": "node tools/build.mjs hvac"
+    "build:hvac": "node tools/build.mjs hvac",
+    "build:plumbing": "node tools/build.mjs plumbing"
   }
 }

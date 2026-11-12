@@ -1,0 +1,49 @@
+<!-- RT: Footer -->
+<footer class="pl pl-footer">
+  <div class="pl-wrap">
+    <div class="pl-footer__grid">
+      <div class="pl-footer__brand">
+        <p class="pl-footer__name">{{business_name}}</p>
+        <p class="pl-footer__blurb">Plumbing repair, drain, water heater and fixture service for homeowners in {{service_area}}.</p>
+{{#if license_line}}
+        <p class="pl-footer__license">{{license_line}}</p>
+{{/if}}
+      </div>
+      <nav class="pl-footer__col" aria-label="Footer">
+        <h2 class="pl-footer__h">Explore</h2>
+        <ul>
+          <li><a href="#pl-services">Services</a></li>
+          <li><a href="#pl-why">Why {{business_short}}</a></li>
+{{#if reviews}}
+          <li><a href="#pl-reviews">Reviews</a></li>
+{{/if}}
+          <li><a href="#pl-process">How it works</a></li>
+          <li><a href="#pl-faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="pl-footer__col">
+        <h2 class="pl-footer__h">Contact</h2>
+        <ul>
+          <li><a href="tel:{{phone_tel}}">{{phone_display}}</a></li>
+{{#if email}}
+          <li><a href="mailto:{{email}}">{{email}}</a></li>
+{{/if}}
+{{#if address}}
+          <li>{{address}}</li>
+{{/if}}
+{{#if hours}}
+          <li>{{hours}}</li>
+{{/if}}
+          <li><a class="pl-footer__cta" href="{{cta_href}}">{{cta_label}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pl-footer__legal">
+      <p>&copy; {{year}} {{business_name}}. All rights reserved.</p>
+{{#if legal_links}}
+      <p>{{legal_links}}</p>
+{{/if}}
+    </div>
+  </div>
+{{localbusiness_jsonld}}
+</footer>
