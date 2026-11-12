@@ -1,0 +1,6 @@
+{
+  "name": "ai-websites",
+  "private": true,
+  "type": "module",
+  "scripts": { "build:roofing": "node tools/build.mjs roofing" }
+}

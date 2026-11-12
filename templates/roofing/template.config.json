@@ -1,0 +1,18 @@
+{
+  "_note": "Per-prospect values. Every value below is SAMPLE data. Replace with verified details before sharing a preview. Never publish unverified licenses, years in business, reviews or guarantees.",
+  "business_name": "Summit Ridge Roofing",
+  "business_short": "Summit Ridge",
+  "city": "Your City",
+  "service_area": "Your City and surrounding areas",
+  "phone_display": "(555) 010-0199",
+  "phone_tel": "+15550100199",
+  "cta_label": "Request a Roof Assessment",
+  "cta_href": "#assessment",
+  "hero_image_url": "",
+  "hero_image_alt": "Crew installing shingles on a residential roof",
+  "trust_points": [
+    "Written estimates before work starts",
+    "Photo-documented roof inspections",
+    "Clear communication from first call to cleanup"
+  ]
+}

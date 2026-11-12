@@ -1,0 +1,11 @@
+{
+  "slug": "example-roofing-co",
+  "business_name": "Example Roofing Co.",
+  "business_short": "Example",
+  "city": "Springfield",
+  "service_area": "Springfield and nearby communities",
+  "phone_display": "(555) 010-0123",
+  "phone_tel": "+15550100123",
+  "hero_image_url": "",
+  "trust_points": ["VERIFIED CLAIM 1", "VERIFIED CLAIM 2", "VERIFIED CLAIM 3"]
+}
