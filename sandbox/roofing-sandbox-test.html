@@ -1,0 +1,542 @@
+<!-- SANDBOX TEST: paste this whole file into ONE Custom Code element on a throwaway GHL page. Not for real sites. -->
+<style>
+/* Roofing template. Everything is scoped under .rt / .rt-* so it can't collide with GHL's builder CSS. */
+.rt{
+  --rt-charcoal:#232120; --rt-charcoal-2:#34302d; --rt-ink:#2b2826;
+  --rt-warm:#faf7f2; --rt-warm-2:#f1ebe2; --rt-line:#e2d9cc;
+  --rt-copper:#9a5a22;      /* text + buttons on light (5.6:1 with white) */
+  --rt-copper-bright:#d08a4a; /* accents on charcoal */
+  --rt-copper-dark:#7f4616;
+  --rt-radius:14px; --rt-shadow:0 10px 30px rgba(35,33,32,.12);
+  --rt-font:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  --rt-font-head:"Georgia","Iowan Old Style","Palatino Linotype",serif;
+  font-family:var(--rt-font); color:var(--rt-ink); line-height:1.6; box-sizing:border-box;
+  -webkit-text-size-adjust:100%;
+}
+.rt *,.rt *::before,.rt *::after{box-sizing:inherit}
+.rt :where(a){color:inherit}
+.rt :where(h1,h2,h3,p,ul,ol){margin:0;padding:0}
+.rt :where(ul,ol){list-style:none}
+.rt-wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 20px}
+.rt-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.rt :focus-visible{outline:3px solid var(--rt-copper-bright);outline-offset:3px;border-radius:4px}
+
+/* Buttons */
+.rt-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:.75rem 1.4rem;border-radius:999px;font:700 1rem/1.2 var(--rt-font);text-decoration:none!important;border:2px solid transparent;cursor:pointer;transition:background-color .2s,color .2s,border-color .2s,transform .2s}
+.rt-btn--primary{background:var(--rt-copper);color:#fff!important}
+.rt-btn--primary:hover{background:var(--rt-copper-dark)}
+.rt-btn--ghost{border-color:rgba(250,247,242,.55);color:var(--rt-warm)!important}
+.rt-btn--ghost:hover{background:rgba(250,247,242,.1);border-color:var(--rt-warm)}
+.rt-btn--lg{min-height:56px;padding:.9rem 1.7rem;font-size:1.05rem}
+
+/* Header */
+.rt-header{position:sticky;top:0;z-index:50;background:var(--rt-charcoal);color:var(--rt-warm);border-bottom:1px solid rgba(250,247,242,.08)}
+.rt-skip{position:absolute;left:12px;top:10px;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);background:var(--rt-warm);color:var(--rt-charcoal);padding:.6rem 1rem;border-radius:8px;font-weight:700;z-index:60;white-space:nowrap}
+.rt-skip:focus{width:auto;height:auto;overflow:visible;clip-path:none}
+.rt-header__inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:68px;position:relative}
+.rt-brand{min-height:44px;display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--rt-warm)}
+.rt-brand__mark{width:34px;height:34px;color:var(--rt-copper-bright);flex:none}
+.rt-brand__name{font:700 1.1rem/1.1 var(--rt-font-head);letter-spacing:.01em}
+.rt-menu-btn{display:none;align-items:center;gap:.6rem;min-height:48px;padding:0 .9rem;background:transparent;color:var(--rt-warm);border:1.5px solid rgba(250,247,242,.4);border-radius:999px;font:600 .95rem var(--rt-font);cursor:pointer}
+.rt-menu-btn__bars{display:grid;gap:4px;width:18px}
+.rt-menu-btn__bars i{display:block;height:2px;background:currentColor;border-radius:2px;transition:transform .25s,opacity .2s}
+.rt-menu-btn[aria-expanded="true"] i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.rt-menu-btn[aria-expanded="true"] i:nth-child(2){opacity:0}
+.rt-menu-btn[aria-expanded="true"] i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.rt-nav{display:flex;align-items:center;gap:1.5rem}
+.rt-nav__list{display:flex;gap:1.5rem}
+.rt-nav__list a,.rt-nav__phone{text-decoration:none;font-weight:600;color:var(--rt-warm);padding:.75rem 0;display:inline-block}
+.rt-nav__list a:hover,.rt-nav__phone:hover{color:var(--rt-copper-bright)}
+.rt-nav__cta{min-height:44px;padding:.6rem 1.2rem;font-size:.95rem}
+
+/* Hero */
+.rt-hero{position:relative;overflow:hidden;background:var(--rt-charcoal);color:var(--rt-warm);padding:56px 0 72px}
+.rt-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 420px at 85% 10%,rgba(208,138,74,.22),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.03),transparent 40%);pointer-events:none}
+.rt-hero__grid{position:relative;display:grid;gap:40px;align-items:center}
+.rt-eyebrow{font:700 .8rem/1 var(--rt-font);letter-spacing:.16em;text-transform:uppercase;color:var(--rt-copper-bright);margin-bottom:1rem}
+.rt-services .rt-eyebrow{color:var(--rt-copper)}
+.rt-hero__title{font:700 clamp(2.2rem,7vw,3.9rem)/1.06 var(--rt-font-head);letter-spacing:-.01em;margin-bottom:1.1rem;color:var(--rt-warm)}
+.rt-hero__lead{font-size:1.125rem;max-width:34rem;color:rgba(250,247,242,.86);margin-bottom:1.75rem}
+.rt-hero__actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.75rem}
+.rt-trust{display:grid;gap:.6rem}
+.rt-trust li{display:flex;gap:.65rem;align-items:flex-start;font-size:.98rem;color:rgba(250,247,242,.9)}
+.rt-trust svg{flex:none;width:20px;height:20px;margin-top:2px;color:var(--rt-copper-bright)}
+.rt-hero__visual{position:relative;border-radius:22px;overflow:hidden;background:var(--rt-charcoal-2);box-shadow:0 24px 60px rgba(0,0,0,.4);aspect-ratio:4/3}
+.rt-hero__visual img,.rt-hero__visual svg{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Services */
+.rt-services{background:var(--rt-warm);padding:72px 0 80px}
+.rt-section-head{max-width:40rem;margin-bottom:2.5rem}
+.rt-h2{font:700 clamp(1.8rem,5vw,2.7rem)/1.12 var(--rt-font-head);color:var(--rt-charcoal);margin-bottom:.9rem}
+.rt-section-head__lead{font-size:1.1rem;color:#5a534d}
+.rt-cards{display:grid;gap:18px;grid-template-columns:1fr}
+.rt-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--rt-line);border-radius:var(--rt-radius);padding:26px;transition:transform .25s,box-shadow .25s,border-color .25s}
+.rt-card:hover{transform:translateY(-3px);box-shadow:var(--rt-shadow);border-color:var(--rt-copper-bright)}
+.rt-card__icon{width:48px;height:48px;margin-bottom:1rem;fill:none;stroke:var(--rt-copper);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;background:var(--rt-warm-2);border-radius:12px;padding:8px;box-sizing:content-box}
+.rt-card h3{font:700 1.25rem/1.25 var(--rt-font-head);color:var(--rt-charcoal);margin-bottom:.5rem}
+.rt-card p{color:#5a534d;margin-bottom:1.1rem;flex:1}
+.rt-card__link{font-weight:700;color:var(--rt-copper)!important;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;min-height:44px}
+.rt-card__link::after{content:"\2192";transition:transform .2s}
+.rt-card__link:hover{text-decoration:underline}
+.rt-card__link:hover::after{transform:translateX(4px)}
+
+
+/* Shared */
+.rt-link{color:var(--rt-copper)!important;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.rt-section-head--light .rt-h2{color:var(--rt-warm)}
+.rt-section-head--light .rt-section-head__lead{color:rgba(250,247,242,.82)}
+.rt-section-head--light .rt-eyebrow{color:var(--rt-copper-bright)}
+.rt-why .rt-eyebrow,.rt-reviews .rt-eyebrow,.rt-faq .rt-eyebrow,.rt-form .rt-eyebrow{color:var(--rt-copper)}
+
+/* Why us */
+.rt-why{background:var(--rt-warm-2);padding:72px 0 80px}
+.rt-why__grid{display:grid;gap:18px;grid-template-columns:1fr}
+.rt-why__item{display:flex;gap:16px;align-items:flex-start;background:var(--rt-warm);border:1px solid var(--rt-line);border-radius:var(--rt-radius);padding:24px}
+.rt-why__tick{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--rt-copper);color:#fff}
+.rt-why__tick svg{width:20px;height:20px}
+.rt-why__item h3{font:700 1.15rem/1.25 var(--rt-font-head);color:var(--rt-charcoal);margin-bottom:.35rem}
+.rt-why__item p{color:#5a534d}
+.rt-creds{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:28px;padding-top:24px;border-top:1px solid var(--rt-line)}
+.rt-creds li{display:flex;align-items:center;gap:.5rem;font-weight:600;color:var(--rt-charcoal)}
+.rt-creds svg{width:20px;height:20px;color:var(--rt-copper)}
+
+/* Reviews */
+.rt-reviews{background:var(--rt-warm);padding:72px 0 80px}
+.rt-rating{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:.5rem;color:#5a534d}
+.rt-stars{color:#b9772f;letter-spacing:.12em;font-size:1.1rem}
+.rt-reviews__grid{display:grid;gap:18px;grid-template-columns:1fr}
+.rt-review figure{margin:0;height:100%;display:flex;flex-direction:column;gap:.8rem;background:#fff;border:1px solid var(--rt-line);border-radius:var(--rt-radius);padding:26px}
+.rt-review blockquote{margin:0;flex:1}
+.rt-review blockquote p{font-size:1.05rem;color:var(--rt-ink)}
+.rt-review figcaption{display:flex;flex-direction:column;color:var(--rt-charcoal)}
+.rt-review figcaption span{font-size:.9rem;color:#6b645e}
+
+/* Process */
+.rt-process{background:var(--rt-charcoal);color:var(--rt-warm);padding:72px 0 80px}
+.rt-steps{display:grid;gap:18px;grid-template-columns:1fr;counter-reset:none}
+.rt-step{position:relative;background:var(--rt-charcoal-2);border:1px solid rgba(250,247,242,.1);border-radius:var(--rt-radius);padding:26px}
+.rt-step__num{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--rt-copper-bright);color:var(--rt-charcoal);font:800 1.15rem var(--rt-font);margin-bottom:1rem}
+.rt-step h3{font:700 1.2rem/1.25 var(--rt-font-head);color:var(--rt-warm);margin-bottom:.4rem}
+.rt-step p{color:rgba(250,247,242,.82)}
+.rt-process__cta{margin-top:36px;text-align:center}
+
+/* FAQ */
+.rt-faq{background:var(--rt-warm);padding:72px 0 80px}
+.rt-faq__list{display:grid;gap:12px;max-width:820px}
+.rt-faq__item{background:#fff;border:1px solid var(--rt-line);border-radius:var(--rt-radius)}
+.rt-faq__item summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:56px;padding:14px 22px;font:700 1.05rem/1.35 var(--rt-font);color:var(--rt-charcoal)}
+.rt-faq__item summary::-webkit-details-marker{display:none}
+.rt-faq__item summary::after{content:"+";flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--rt-warm-2);color:var(--rt-copper);font:700 1.3rem/1 var(--rt-font)}
+.rt-faq__item[open] summary::after{content:"\2212"}
+.rt-faq__item[open]{border-color:var(--rt-copper-bright)}
+.rt-faq__a{padding:0 22px 20px;color:#5a534d}
+
+/* Form */
+.rt-form{background:var(--rt-warm-2);padding:72px 0 80px;scroll-margin-top:76px}
+.rt-form__grid{display:grid;gap:36px;align-items:start}
+.rt-form__points{display:grid;gap:.7rem;margin-top:1.5rem}
+.rt-form__points li{display:flex;gap:.65rem;align-items:flex-start;color:var(--rt-ink)}
+.rt-form__points svg{flex:none;width:20px;height:20px;margin-top:3px;color:var(--rt-copper)}
+.rt-form__card{background:#fff;border:1px solid var(--rt-line);border-radius:20px;padding:22px;box-shadow:var(--rt-shadow);min-height:120px}
+.rt-form__card iframe{display:block;width:100%;border:0}
+.rt-form__fallback{padding:12px;text-align:center;color:var(--rt-ink)}
+.rt-form__fallback p+p{margin-top:.5rem}
+
+/* Footer */
+.rt-footer{background:#191716;color:rgba(250,247,242,.8);padding:56px 0 28px}
+.rt-footer__grid{display:grid;gap:32px;grid-template-columns:1fr}
+.rt-footer__name{font:700 1.3rem/1.2 var(--rt-font-head);color:var(--rt-warm);margin-bottom:.6rem}
+.rt-footer__blurb{max-width:26rem}
+.rt-footer__license{margin-top:.8rem;font-size:.9rem;color:var(--rt-copper-bright)}
+.rt-footer__h{font:700 .8rem/1 var(--rt-font);letter-spacing:.16em;text-transform:uppercase;color:var(--rt-copper-bright);margin:0 0 .8rem}
+.rt-footer__col ul{display:grid;gap:.15rem}
+.rt-footer a{text-decoration:none;display:inline-block;padding:.45rem 0;min-height:44px;color:rgba(250,247,242,.88)}
+.rt-footer a:hover{color:var(--rt-copper-bright);text-decoration:underline}
+.rt-footer__cta{font-weight:700;color:var(--rt-copper-bright)!important}
+.rt-footer__legal{margin-top:36px;padding-top:20px;border-top:1px solid rgba(250,247,242,.12);display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;justify-content:space-between;font-size:.9rem}
+.rt-footer__legal a{min-height:0;padding:.25rem 0}
+
+@media (min-width:640px){.rt-why__grid,.rt-reviews__grid,.rt-steps{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:900px){
+  .rt-reviews__grid{grid-template-columns:repeat(3,1fr)}
+  .rt-steps{grid-template-columns:repeat(4,1fr)}
+  .rt-form__grid{grid-template-columns:1fr 1.05fr;gap:56px}
+  .rt-footer__grid{grid-template-columns:1.6fr 1fr 1fr}
+  .rt-why,.rt-reviews,.rt-process,.rt-faq,.rt-form{padding:96px 0 104px}
+}
+
+/* Mobile contact bar */
+.rt-mbar{display:none}
+
+/* Motion: only when JS is present and user hasn't asked for reduced motion */
+@media (prefers-reduced-motion:no-preference){
+  .rt-js .rt-reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .rt-js .rt-reveal.is-in{opacity:1;transform:none}
+}
+
+@media (min-width:640px){.rt-cards{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:900px){
+  .rt-hero{padding:88px 0 104px}
+  .rt-hero__grid{grid-template-columns:1.05fr .95fr;gap:56px}
+  .rt-cards{grid-template-columns:repeat(3,1fr)}
+  .rt-wrap{padding:0 32px}
+}
+@media (max-width:899px){
+  .rt-menu-btn{display:inline-flex}
+  .rt-nav{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:0;background:var(--rt-charcoal);padding:8px 20px 20px;border-top:1px solid rgba(250,247,242,.1);box-shadow:0 20px 30px rgba(0,0,0,.3)}
+  .rt-nav.is-open{display:flex}
+  .rt-nav__list{flex-direction:column;gap:0}
+  .rt-nav__list a,.rt-nav__phone{display:block;padding:.95rem 0;border-bottom:1px solid rgba(250,247,242,.1)}
+  .rt-nav__cta{margin-top:1rem}
+  /* No-JS fallback: menu stays visible so links are never unreachable */
+  .rt:not(.rt-js-ready) .rt-nav{display:flex;position:static;box-shadow:none}
+  .rt:not(.rt-js-ready) .rt-menu-btn{display:none}
+}
+@media (max-width:767px){
+  .rt-mbar{display:grid;grid-template-columns:auto 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:var(--rt-charcoal);border-top:1px solid rgba(250,247,242,.12);box-shadow:0 -8px 24px rgba(0,0,0,.25)}
+  .rt-mbar__btn{display:flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:0 1.1rem;border-radius:999px;font:700 1rem/1.15 var(--rt-font);text-decoration:none!important;text-align:center}
+  .rt-mbar__btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+  .rt-mbar__btn--call{border:2px solid rgba(250,247,242,.55);color:var(--rt-warm)!important}
+  .rt-mbar__btn--cta{background:var(--rt-copper);color:#fff!important}
+  .rt-footer{padding-bottom:calc(96px + env(safe-area-inset-bottom))} /* clear the fixed contact bar */
+  .rt-hero__actions .rt-btn{flex:1 1 100%}
+}
+
+</style>
+<!-- RT: Header + navigation -->
+<header class="rt rt-header" id="rt-header">
+  <a class="rt-skip" href="#rt-hero">Skip to content</a>
+  <div class="rt-wrap rt-header__inner">
+    <a class="rt-brand" href="#rt-hero" aria-label="Summit Ridge Roofing home">
+      <svg class="rt-brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M3 17 16 5l13 12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v10h16V16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/></svg>
+      <span class="rt-brand__name">Summit Ridge Roofing</span>
+    </a>
+    <button class="rt-menu-btn" type="button" aria-expanded="false" aria-controls="rt-nav" data-rt-menu>
+      <span class="rt-menu-btn__label">Menu</span>
+      <span class="rt-menu-btn__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+    <nav class="rt-nav" id="rt-nav" aria-label="Primary">
+      <ul class="rt-nav__list">
+        <li><a href="#rt-services">Services</a></li>
+        <li><a href="#rt-why">Why Us</a></li>
+        <li><a href="#rt-faq">FAQ</a></li>
+      </ul>
+      <a class="rt-nav__phone" href="tel:+15550100199">(555) 010-0199</a>
+      <a class="rt-btn rt-btn--primary rt-nav__cta" href="#assessment">Request a Roof Assessment</a>
+    </nav>
+  </div>
+</header>
+
+<!-- RT: Hero -->
+<section class="rt rt-hero" id="rt-hero" aria-labelledby="rt-hero-title">
+  <div class="rt-wrap rt-hero__grid">
+    <div class="rt-hero__copy">
+      <p class="rt-eyebrow rt-reveal">Roofing in Your City</p>
+      <h1 class="rt-hero__title rt-reveal" id="rt-hero-title">A roof you don&rsquo;t have to think about.</h1>
+      <p class="rt-hero__lead rt-reveal">Summit Ridge Roofing repairs and replaces roofs for homeowners across Your City and surrounding areas. Book a roof assessment and get straight answers on what your roof needs.</p>
+      <div class="rt-hero__actions rt-reveal">
+        <a class="rt-btn rt-btn--primary rt-btn--lg" href="#assessment">Request a Roof Assessment</a>
+        <a class="rt-btn rt-btn--ghost rt-btn--lg" href="tel:+15550100199">Call (555) 010-0199</a>
+      </div>
+      <ul class="rt-trust rt-reveal" aria-label="What to expect">
+        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Written estimates before work starts</span></li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Photo-documented roof inspections</span></li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Clear communication from first call to cleanup</span></li>
+      </ul>
+    </div>
+    <div class="rt-hero__visual rt-reveal" aria-hidden="false">
+      <svg viewBox="0 0 800 600" role="img" aria-label="Illustration of a residential roofline at sunset" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="rt-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b3430"/><stop offset=".6" stop-color="#7a4a2a"/><stop offset="1" stop-color="#d08a4a"/></linearGradient>
+          <linearGradient id="rt-roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4541"/><stop offset="1" stop-color="#262321"/></linearGradient>
+          <pattern id="rt-shingle" width="40" height="22" patternUnits="userSpaceOnUse"><path d="M0 21.5h40M20 0v11M0 11h40M0 11V0M40 11V0" stroke="#fff" stroke-opacity=".07" fill="none"/></pattern>
+        </defs>
+        <rect width="800" height="600" fill="url(#rt-sky)"/>
+        <circle cx="610" cy="210" r="70" fill="#f6d9b0" opacity=".9"/>
+        <circle cx="610" cy="210" r="110" fill="#f6d9b0" opacity=".16"/>
+        <path d="M-20 600V430l260-190 260 190V600Z" fill="#1f1c1a" opacity=".55"/>
+        <path d="M120 600V380L430 150l370 270V600Z" fill="url(#rt-roof)"/>
+        <path d="M120 600V380L430 150l370 270V600Z" fill="url(#rt-shingle)"/>
+        <path d="M110 392 430 138l380 282" fill="none" stroke="#d08a4a" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="560" y="210" width="54" height="110" fill="#2e2a27"/><rect x="552" y="200" width="70" height="14" fill="#d08a4a"/>
+        <rect x="300" y="330" width="120" height="86" rx="6" fill="#2e2a27" stroke="#d08a4a" stroke-width="5"/>
+        <path d="M360 330v86M300 373h120" stroke="#d08a4a" stroke-width="3" opacity=".7"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- RT: Services -->
+<section class="rt rt-services" id="rt-services" aria-labelledby="rt-services-title">
+  <div class="rt-wrap">
+    <div class="rt-section-head">
+      <p class="rt-eyebrow">Services</p>
+      <h2 class="rt-h2" id="rt-services-title">Everything your roof needs, from one team.</h2>
+      <p class="rt-section-head__lead">Whether it&rsquo;s a single leak or a full replacement, every project starts with an assessment so you know the options before you commit.</p>
+    </div>
+    <ul class="rt-cards">
+      <li class="rt-card rt-reveal">
+        <svg class="rt-card__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M6 26 24 10l18 16" /><path d="M12 24v14h24V24" /><path d="m20 38 8-10" /></svg>
+        <h3>Roof Repair</h3>
+        <p>Fix leaks, missing shingles, and worn spots before small problems turn into interior damage.</p>
+        <a class="rt-card__link" href="#assessment">Request an assessment<span class="rt-sr"> for roof repair</span></a>
+      </li>
+      <li class="rt-card rt-reveal">
+        <svg class="rt-card__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M4 30 24 12l20 18" /><path d="M10 32l14-13 14 13" /><path d="M16 38l8-7 8 7" /></svg>
+        <h3>Roof Replacement</h3>
+        <p>Full tear-off and installation with materials matched to your home, budget, and climate.</p>
+        <a class="rt-card__link" href="#assessment">Request an assessment<span class="rt-sr"> for roof replacement</span></a>
+      </li>
+      <li class="rt-card rt-reveal">
+        <svg class="rt-card__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M14 28a8 8 0 1 1 3-15 10 10 0 0 1 19 4 6 6 0 0 1-1 11H14Z" /><path d="m22 32-3 8M30 32l-3 8" /></svg>
+        <h3>Storm &amp; Hail Damage</h3>
+        <p>Documented inspections that help you understand damage and talk with your insurance company.</p>
+        <a class="rt-card__link" href="#assessment">Request an assessment<span class="rt-sr"> for storm damage</span></a>
+      </li>
+      <li class="rt-card rt-reveal">
+        <svg class="rt-card__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><circle cx="21" cy="21" r="11" /><path d="m29.5 29.5 10 10" /><path d="m16 21 4 4 7-8" /></svg>
+        <h3>Roof Inspections</h3>
+        <p>A thorough look at shingles, flashing, and decking, with photos and a plain-English summary.</p>
+        <a class="rt-card__link" href="#assessment">Request an assessment<span class="rt-sr"> for a roof inspection</span></a>
+      </li>
+      <li class="rt-card rt-reveal">
+        <svg class="rt-card__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M6 14h36v6H6z" /><path d="M10 20v16M18 20v10M26 20v16M34 20v10" /><path d="M38 20v14a3 3 0 0 1-6 0" /></svg>
+        <h3>Gutters &amp; Drainage</h3>
+        <p>Keep water moving off the roof and away from your foundation with properly pitched gutters.</p>
+        <a class="rt-card__link" href="#assessment">Request an assessment<span class="rt-sr"> for gutters</span></a>
+      </li>
+      <li class="rt-card rt-reveal">
+        <svg class="rt-card__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M8 38h32" /><path d="M14 38V22l10-8 10 8v16" /><path d="M20 38v-9h8v9" /><path d="M24 14V8" /></svg>
+        <h3>Flashing, Vents &amp; Skylights</h3>
+        <p>Seal the weak points around chimneys, vents, and skylights where most leaks begin.</p>
+        <a class="rt-card__link" href="#assessment">Request an assessment<span class="rt-sr"> for flashing and vents</span></a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- RT: Why us -->
+<section class="rt rt-why" id="rt-why" aria-labelledby="rt-why-title">
+  <div class="rt-wrap">
+    <div class="rt-section-head">
+      <p class="rt-eyebrow">Why Summit Ridge</p>
+      <h2 class="rt-h2" id="rt-why-title">A simpler, more honest roofing experience.</h2>
+      <p class="rt-section-head__lead">Roofing is a big decision. Here&rsquo;s how we make it easier.</p>
+    </div>
+    <ul class="rt-why__grid">
+      <li class="rt-why__item rt-reveal"><span class="rt-why__tick"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h3>Straight answers</h3><p>A plain-English explanation of what your roof needs, and what it doesn't.</p></div></li>
+      <li class="rt-why__item rt-reveal"><span class="rt-why__tick"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h3>Photo-documented findings</h3><p>We show you what we see, so decisions are based on facts, not pressure.</p></div></li>
+      <li class="rt-why__item rt-reveal"><span class="rt-why__tick"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h3>Written estimates</h3><p>Scope, materials and pricing in writing before any work begins.</p></div></li>
+      <li class="rt-why__item rt-reveal"><span class="rt-why__tick"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h3>Respect for your property</h3><p>Careful site protection and cleanup from first day to last.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- RT: Process -->
+<section class="rt rt-process" id="rt-process" aria-labelledby="rt-process-title">
+  <div class="rt-wrap">
+    <div class="rt-section-head rt-section-head--light">
+      <p class="rt-eyebrow">How it works</p>
+      <h2 class="rt-h2" id="rt-process-title">From first call to finished roof.</h2>
+      <p class="rt-section-head__lead">A clear path, so you always know what happens next.</p>
+    </div>
+    <ol class="rt-steps">
+      <li class="rt-step rt-reveal"><span class="rt-step__num" aria-hidden="true">1</span><h3>Request an assessment</h3><p>Tell us about your roof and when you&rsquo;re available. We&rsquo;ll reach out to confirm a time.</p></li>
+      <li class="rt-step rt-reveal"><span class="rt-step__num" aria-hidden="true">2</span><h3>We inspect and document</h3><p>We look over your roof, take photos, and explain what we find in plain English.</p></li>
+      <li class="rt-step rt-reveal"><span class="rt-step__num" aria-hidden="true">3</span><h3>You get a written estimate</h3><p>Scope, materials, timeline and pricing, so you can decide without pressure.</p></li>
+      <li class="rt-step rt-reveal"><span class="rt-step__num" aria-hidden="true">4</span><h3>We do the work</h3><p>Your roof is repaired or replaced, the site is cleaned up, and we walk through the finished job with you.</p></li>
+    </ol>
+    <p class="rt-process__cta"><a class="rt-btn rt-btn--primary rt-btn--lg" href="#assessment">Request a Roof Assessment</a></p>
+  </div>
+</section>
+
+<!-- RT: FAQ (native <details>, no JS needed) -->
+<section class="rt rt-faq" id="rt-faq" aria-labelledby="rt-faq-title">
+  <div class="rt-wrap rt-faq__inner">
+    <div class="rt-section-head">
+      <p class="rt-eyebrow">FAQ</p>
+      <h2 class="rt-h2" id="rt-faq-title">Questions homeowners ask.</h2>
+      <p class="rt-section-head__lead">Don&rsquo;t see yours? Call <a class="rt-link" href="tel:+15550100199">(555) 010-0199</a>.</p>
+    </div>
+    <div class="rt-faq__list">
+      <details class="rt-faq__item"><summary>How do I know if I need a repair or a full replacement?</summary><div class="rt-faq__a"><p>It depends on the age, condition and extent of the damage. An assessment shows whether a targeted repair makes sense or whether replacement is the better long-term value, and you get the reasoning in writing.</p></div></details>
+      <details class="rt-faq__item"><summary>What happens during a roof assessment?</summary><div class="rt-faq__a"><p>We inspect the roof surface, flashing, vents and visible decking, take photos, and walk you through the findings. You then receive a written estimate for any recommended work.</p></div></details>
+      <details class="rt-faq__item"><summary>How long does a roof replacement take?</summary><div class="rt-faq__a"><p>Timelines depend on roof size, materials and weather. Your estimate includes the expected schedule so you can plan around it.</p></div></details>
+      <details class="rt-faq__item"><summary>Can you help with storm or hail damage and insurance?</summary><div class="rt-faq__a"><p>We can inspect and document damage with photos to support your claim. Coverage decisions are made by your insurance company.</p></div></details>
+      <details class="rt-faq__item"><summary>What warranties come with the work?</summary><div class="rt-faq__a"><p>Warranty terms depend on the materials selected and the workmanship covered. Details are provided in your written estimate before you decide.</p></div></details>
+      <details class="rt-faq__item"><summary>What areas do you serve?</summary><div class="rt-faq__a"><p>We serve Your City and surrounding areas. Not sure if you're in range? Call or send a request and we'll confirm.</p></div></details>
+    </div>
+  </div>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I know if I need a repair or a full replacement?","acceptedAnswer":{"@type":"Answer","text":"It depends on the age, condition and extent of the damage. An assessment shows whether a targeted repair makes sense or whether replacement is the better long-term value, and you get the reasoning in writing."}},{"@type":"Question","name":"What happens during a roof assessment?","acceptedAnswer":{"@type":"Answer","text":"We inspect the roof surface, flashing, vents and visible decking, take photos, and walk you through the findings. You then receive a written estimate for any recommended work."}},{"@type":"Question","name":"How long does a roof replacement take?","acceptedAnswer":{"@type":"Answer","text":"Timelines depend on roof size, materials and weather. Your estimate includes the expected schedule so you can plan around it."}},{"@type":"Question","name":"Can you help with storm or hail damage and insurance?","acceptedAnswer":{"@type":"Answer","text":"We can inspect and document damage with photos to support your claim. Coverage decisions are made by your insurance company."}},{"@type":"Question","name":"What warranties come with the work?","acceptedAnswer":{"@type":"Answer","text":"Warranty terms depend on the materials selected and the workmanship covered. Details are provided in your written estimate before you decide."}},{"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"We serve Your City and surrounding areas. Not sure if you're in range? Call or send a request and we'll confirm."}}]}</script>
+</section>
+
+<!-- RT: Assessment form. Anchor id="assessment" is the target of every CTA. -->
+<section class="rt rt-form" id="assessment" aria-labelledby="rt-form-title">
+  <div class="rt-wrap rt-form__grid">
+    <div class="rt-form__copy">
+      <p class="rt-eyebrow">Get started</p>
+      <h2 class="rt-h2" id="rt-form-title">Request your roof assessment</h2>
+      <p class="rt-section-head__lead">Tell us about your roof and the best way to reach you. We'll follow up to confirm a time.</p>
+      <ul class="rt-form__points">
+        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Takes about a minute</span></li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>We reply to confirm a time that works for you</span></li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Prefer to talk? Call <a class="rt-link" href="tel:+15550100199">(555) 010-0199</a></span></li>
+      </ul>
+    </div>
+    <div class="rt-form__card">
+      <div class="rt-form__fallback" role="note"><p><strong>Online request form not connected yet.</strong></p><p>Call <a class="rt-link" href="tel:+15550100199">(555) 010-0199</a> to request your assessment.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RT: Footer -->
+<footer class="rt rt-footer">
+  <div class="rt-wrap">
+    <div class="rt-footer__grid">
+      <div class="rt-footer__brand">
+        <p class="rt-footer__name">Summit Ridge Roofing</p>
+        <p class="rt-footer__blurb">Roof repair, replacement and inspections for homeowners in Your City and surrounding areas.</p>
+      </div>
+      <nav class="rt-footer__col" aria-label="Footer">
+        <h2 class="rt-footer__h">Explore</h2>
+        <ul>
+          <li><a href="#rt-services">Services</a></li>
+          <li><a href="#rt-why">Why Summit Ridge</a></li>
+          <li><a href="#rt-process">How it works</a></li>
+          <li><a href="#rt-faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="rt-footer__col">
+        <h2 class="rt-footer__h">Contact</h2>
+        <ul>
+          <li><a href="tel:+15550100199">(555) 010-0199</a></li>
+          <li><a class="rt-footer__cta" href="#assessment">Request a Roof Assessment</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rt-footer__legal">
+      <p>&copy; 2026 Summit Ridge Roofing. All rights reserved.</p>
+    </div>
+  </div>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"RoofingContractor","name":"Summit Ridge Roofing","telephone":"+15550100199","areaServed":"Your City and surrounding areas"}</script>
+</footer>
+
+<!-- RT: Mobile contact bar (visible below 768px) -->
+<div class="rt rt-mbar" role="region" aria-label="Quick contact">
+  <a class="rt-mbar__btn rt-mbar__btn--call" href="tel:+15550100199"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>Call</a>
+  <a class="rt-mbar__btn rt-mbar__btn--cta" href="#assessment">Request a Roof Assessment</a>
+</div>
+
+<script>
+/* Roofing template behavior: mobile menu + reduced-motion-safe reveals. No dependencies. */
+(function () {
+  "use strict";
+  var roots = document.querySelectorAll(".rt");
+  if (!roots.length) return;
+  roots.forEach(function (r) { r.classList.add("rt-js", "rt-js-ready"); });
+
+  var btn = document.querySelector("[data-rt-menu]");
+  var nav = document.getElementById("rt-nav");
+  if (btn && nav) {
+    var set = function (open) {
+      btn.setAttribute("aria-expanded", String(open));
+      nav.classList.toggle("is-open", open);
+    };
+    btn.addEventListener("click", function () { set(btn.getAttribute("aria-expanded") !== "true"); });
+    nav.addEventListener("click", function (e) { if (e.target.closest("a")) set(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && btn.getAttribute("aria-expanded") === "true") { set(false); btn.focus(); }
+    });
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest("#rt-header")) set(false);
+    });
+  }
+
+  var items = document.querySelectorAll(".rt-reveal");
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !("IntersectionObserver" in window)) {
+    items.forEach(function (el) { el.classList.add("is-in"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(function (el) { io.observe(el); });
+})();
+
+</script>
+<!-- ===== SANDBOX DIAGNOSTICS: REMOVE THIS BLOCK BEFORE PUBLISHING A REAL SITE ===== -->
+<div id="sbx" style="position:fixed;left:8px;bottom:84px;z-index:2147483000;font:13px/1.45 system-ui,sans-serif;background:#111;color:#fff;border-radius:10px;width:min(92vw,360px);box-shadow:0 6px 24px rgba(0,0,0,.45)">
+  <details><summary id="sbx-sum" style="padding:10px 12px;cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center">Sandbox checks: running&hellip;</summary>
+  <div id="sbx-out" style="padding:0 12px 12px;max-height:55vh;overflow:auto"></div></details>
+</div>
+<script>
+(function () {
+  var P = "rt", errs = 0;
+  var box = document.getElementById("sbx");
+  if (box && box.parentNode !== document.body) document.body.appendChild(box); /* escape GHL wrappers so the panel is never clipped */
+  window.addEventListener("error", function () { errs++; });
+  var $ = function (s) { return document.querySelector(s); };
+  var sum = $("#sbx-sum"), out = $("#sbx-out");
+  var hdr = $("#" + P + "-header"), bar = $("." + P + "-mbar"), btn = $("[data-" + P + "-menu]"), nav = $("#" + P + "-nav");
+  var foot = $("footer." + P) || $("." + P + "-footer");
+  var top0 = foot ? foot.getBoundingClientRect().top : 0;
+  var scrolled = 0, hdrOk = null, barOk = null, menuRes = null;
+  function vis(el) { return !!el && getComputedStyle(el).display !== "none" && el.getBoundingClientRect().width > 0; }
+  function name(el) { return el.tagName.toLowerCase() + (el.id ? "#" + el.id : "") + (el.className && typeof el.className === "string" ? "." + el.className.trim().split(/\s+/)[0] : ""); }
+  function blockers(el, kind) {
+    var bad = [];
+    for (var a = el.parentElement; a && a !== document.documentElement; a = a.parentElement) {
+      var c = getComputedStyle(a), why = [];
+      if (kind === "sticky") { if (/(hidden|auto|scroll|clip)/.test(c.overflowX + c.overflowY)) why.push("overflow"); }
+      else { if (c.transform !== "none") why.push("transform"); if (c.filter !== "none") why.push("filter"); if (c.perspective !== "none") why.push("perspective"); if (/(paint|layout|strict|content)/.test(c.contain)) why.push("contain"); if (/(transform|filter)/.test(c.willChange)) why.push("will-change"); }
+      if (why.length) bad.push(name(a) + " (" + why.join("+") + ")");
+    }
+    return bad;
+  }
+  function measure() {
+    if (foot) scrolled = Math.max(scrolled, Math.abs(foot.getBoundingClientRect().top - top0));
+    if (hdr && scrolled > 400) hdrOk = Math.abs(hdr.getBoundingClientRect().top) <= 2 ? true : false;
+    if (vis(bar)) barOk = Math.abs(bar.getBoundingClientRect().bottom - window.innerHeight) <= 2;
+  }
+  function testMenu() {
+    if (!btn || !nav || !vis(btn)) { menuRes = "na"; return; }
+    btn.click(); var open = btn.getAttribute("aria-expanded") === "true" && vis(nav);
+    btn.click(); var closed = btn.getAttribute("aria-expanded") === "false" && !vis(nav);
+    menuRes = open && closed;
+  }
+  function row(state, text) {
+    var ic = state === true ? "✅" : state === false ? "❌" : "•";
+    return '<div style="margin:6px 0">' + ic + " " + text + "</div>";
+  }
+  function render() {
+    measure();
+    var rows = [], fail = 0, ok = 0;
+    function add(state, t) { rows.push(row(state, t)); if (state === true) ok++; if (state === false) fail++; }
+    var root = $("." + P + ".is-js, ." + P + "-js-ready") || $("." + P + "-js-ready");
+    add(true, "JavaScript runs in this element (this panel is live).");
+    add(!!root, "Template script initialized" + (root ? "." : ": NOT run. Is zz-script.html included / JS blocked or delayed (try turning off \"Optimize JavaScript\")?"));
+    var over = document.documentElement.scrollWidth > document.documentElement.clientWidth + 1;
+    add(!over, over ? "Horizontal overflow: page is wider than the screen." : "No horizontal scrolling.");
+    add(menuRes === "na" ? null : menuRes, menuRes === "na" ? "Mobile menu: n/a at this width. Re-test at phone width." : menuRes ? "Mobile menu opens and closes." : "Mobile menu did not open/close.");
+    var hb = hdr ? blockers(hdr, "sticky") : [];
+    add(hdrOk, hdrOk === null ? "Sticky header: scroll down ~half a page to test." : hdrOk ? "Sticky header stays at the top." : "Sticky header does NOT stick." + (hb.length ? " Blocked by: " + hb.join(", ") : " (no overflow blocker found; the element's own container may be too short)"));
+    var bb = bar ? blockers(bar, "fixed") : [];
+    add(vis(bar) ? barOk : null, vis(bar) ? (barOk ? "Mobile bar is pinned to the bottom." : "Mobile bar is NOT pinned to the bottom." + (bb.length ? " Blocked by: " + bb.join(", ") : "")) : "Mobile bar: hidden at this width (shows under 768px). Re-test on a phone.");
+    add(!!document.getElementById("assessment"), document.getElementById("assessment") ? "Anchor #assessment exists. Tap a CTA to confirm it scrolls." : "Anchor #assessment missing.");
+    var rv = document.querySelectorAll("." + P + "-reveal"), shown = document.querySelectorAll("." + P + "-reveal.is-in");
+    add(null, "Reveal animations: " + shown.length + "/" + rv.length + " shown (rest appear as you scroll; all show with reduced motion).");
+    add(errs ? false : true, errs ? errs + " script error(s) on the page." : "No script errors.");
+    add(null, "Manual: tap a phone number (opens dialer), a nav link (scrolls), FAQ rows (open/close). Compare fonts/spacing to the preview.");
+    out.innerHTML = rows.join("");
+    sum.textContent = "Sandbox checks: " + ok + " ok, " + fail + " failing";
+    sum.style.color = fail ? "#ffb4a8" : "#9be7b0";
+  }
+  setTimeout(function () { testMenu(); render(); }, 400);
+  document.addEventListener("scroll", render, true);
+  window.addEventListener("resize", function () { setTimeout(function () { testMenu(); render(); }, 150); });
+})();
+</script>
+<!-- ===== END SANDBOX DIAGNOSTICS ===== -->

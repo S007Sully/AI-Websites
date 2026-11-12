@@ -43,6 +43,15 @@ Optional: `email`, `address`, `hours`, `license_line`, `credentials[]`, `why_us[
 - `credentials` / `license_line` render only when provided. Verify before adding.
 - The build prints warnings for anything missing. `prospects/_qa-fixture.json` holds clearly-labeled SAMPLE content for layout QA only.
 
+## Sandbox test (fastest way to de-risk GHL)
+`sandbox/roofing-sandbox-test.html` is the whole roofing page (CSS + all sections + script + a diagnostics panel) in **one** file. Regenerate for any template with `node tools/build.mjs <template>` → `dist/<slug>/sandbox-test.html`.
+1. In a throwaway GHL page add **one** Custom Code element and paste the whole file.
+2. Open the published/preview URL on a phone. Tap the **Sandbox checks** pill (bottom-left). It reports JS running, menu, sticky header, pinned mobile bar, overflow, and names any GHL parent element (`overflow` / `transform`) that is blocking sticky or fixed positioning.
+3. Scroll down half a page so the sticky-header check can run. Repeat at desktop width.
+4. Delete the element when done. **Never publish the diagnostics block to a client site.**
+
+Caveat: the all-in-one file puts the header in a tall wrapper, so sticky works there even if it would not in the real split layout (one Custom Code element per section: a header in its own short element has nothing to stick within). To test the split case, paste only `01-header.html` into its own element above a tall element and re-check.
+
 ## Must verify in a GHL sandbox page before the first real preview
 - JavaScript in the Custom Code element runs (menu + reveal animations). Without JS the menu stays open and content stays visible, so it degrades safely.
 - Sticky header: `position: sticky` only works if its GHL section isn't a short container. If it doesn't stick, set the header as the page's native header or accept a static header.

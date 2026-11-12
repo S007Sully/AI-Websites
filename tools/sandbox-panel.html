@@ -1,0 +1,73 @@
+<!-- ===== SANDBOX DIAGNOSTICS: REMOVE THIS BLOCK BEFORE PUBLISHING A REAL SITE ===== -->
+<div id="sbx" style="position:fixed;left:8px;bottom:84px;z-index:2147483000;font:13px/1.45 system-ui,sans-serif;background:#111;color:#fff;border-radius:10px;width:min(92vw,360px);box-shadow:0 6px 24px rgba(0,0,0,.45)">
+  <details><summary id="sbx-sum" style="padding:10px 12px;cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center">Sandbox checks: running&hellip;</summary>
+  <div id="sbx-out" style="padding:0 12px 12px;max-height:55vh;overflow:auto"></div></details>
+</div>
+<script>
+(function () {
+  var P = "__P__", errs = 0;
+  var box = document.getElementById("sbx");
+  if (box && box.parentNode !== document.body) document.body.appendChild(box); /* escape GHL wrappers so the panel is never clipped */
+  window.addEventListener("error", function () { errs++; });
+  var $ = function (s) { return document.querySelector(s); };
+  var sum = $("#sbx-sum"), out = $("#sbx-out");
+  var hdr = $("#" + P + "-header"), bar = $("." + P + "-mbar"), btn = $("[data-" + P + "-menu]"), nav = $("#" + P + "-nav");
+  var foot = $("footer." + P) || $("." + P + "-footer");
+  var top0 = foot ? foot.getBoundingClientRect().top : 0;
+  var scrolled = 0, hdrOk = null, barOk = null, menuRes = null;
+  function vis(el) { return !!el && getComputedStyle(el).display !== "none" && el.getBoundingClientRect().width > 0; }
+  function name(el) { return el.tagName.toLowerCase() + (el.id ? "#" + el.id : "") + (el.className && typeof el.className === "string" ? "." + el.className.trim().split(/\s+/)[0] : ""); }
+  function blockers(el, kind) {
+    var bad = [];
+    for (var a = el.parentElement; a && a !== document.documentElement; a = a.parentElement) {
+      var c = getComputedStyle(a), why = [];
+      if (kind === "sticky") { if (/(hidden|auto|scroll|clip)/.test(c.overflowX + c.overflowY)) why.push("overflow"); }
+      else { if (c.transform !== "none") why.push("transform"); if (c.filter !== "none") why.push("filter"); if (c.perspective !== "none") why.push("perspective"); if (/(paint|layout|strict|content)/.test(c.contain)) why.push("contain"); if (/(transform|filter)/.test(c.willChange)) why.push("will-change"); }
+      if (why.length) bad.push(name(a) + " (" + why.join("+") + ")");
+    }
+    return bad;
+  }
+  function measure() {
+    if (foot) scrolled = Math.max(scrolled, Math.abs(foot.getBoundingClientRect().top - top0));
+    if (hdr && scrolled > 400) hdrOk = Math.abs(hdr.getBoundingClientRect().top) <= 2 ? true : false;
+    if (vis(bar)) barOk = Math.abs(bar.getBoundingClientRect().bottom - window.innerHeight) <= 2;
+  }
+  function testMenu() {
+    if (!btn || !nav || !vis(btn)) { menuRes = "na"; return; }
+    btn.click(); var open = btn.getAttribute("aria-expanded") === "true" && vis(nav);
+    btn.click(); var closed = btn.getAttribute("aria-expanded") === "false" && !vis(nav);
+    menuRes = open && closed;
+  }
+  function row(state, text) {
+    var ic = state === true ? "✅" : state === false ? "❌" : "•";
+    return '<div style="margin:6px 0">' + ic + " " + text + "</div>";
+  }
+  function render() {
+    measure();
+    var rows = [], fail = 0, ok = 0;
+    function add(state, t) { rows.push(row(state, t)); if (state === true) ok++; if (state === false) fail++; }
+    var root = $("." + P + ".is-js, ." + P + "-js-ready") || $("." + P + "-js-ready");
+    add(true, "JavaScript runs in this element (this panel is live).");
+    add(!!root, "Template script initialized" + (root ? "." : ": NOT run. Is zz-script.html included / JS blocked or delayed (try turning off \"Optimize JavaScript\")?"));
+    var over = document.documentElement.scrollWidth > document.documentElement.clientWidth + 1;
+    add(!over, over ? "Horizontal overflow: page is wider than the screen." : "No horizontal scrolling.");
+    add(menuRes === "na" ? null : menuRes, menuRes === "na" ? "Mobile menu: n/a at this width. Re-test at phone width." : menuRes ? "Mobile menu opens and closes." : "Mobile menu did not open/close.");
+    var hb = hdr ? blockers(hdr, "sticky") : [];
+    add(hdrOk, hdrOk === null ? "Sticky header: scroll down ~half a page to test." : hdrOk ? "Sticky header stays at the top." : "Sticky header does NOT stick." + (hb.length ? " Blocked by: " + hb.join(", ") : " (no overflow blocker found; the element's own container may be too short)"));
+    var bb = bar ? blockers(bar, "fixed") : [];
+    add(vis(bar) ? barOk : null, vis(bar) ? (barOk ? "Mobile bar is pinned to the bottom." : "Mobile bar is NOT pinned to the bottom." + (bb.length ? " Blocked by: " + bb.join(", ") : "")) : "Mobile bar: hidden at this width (shows under 768px). Re-test on a phone.");
+    add(!!document.getElementById("assessment"), document.getElementById("assessment") ? "Anchor #assessment exists. Tap a CTA to confirm it scrolls." : "Anchor #assessment missing.");
+    var rv = document.querySelectorAll("." + P + "-reveal"), shown = document.querySelectorAll("." + P + "-reveal.is-in");
+    add(null, "Reveal animations: " + shown.length + "/" + rv.length + " shown (rest appear as you scroll; all show with reduced motion).");
+    add(errs ? false : true, errs ? errs + " script error(s) on the page." : "No script errors.");
+    add(null, "Manual: tap a phone number (opens dialer), a nav link (scrolls), FAQ rows (open/close). Compare fonts/spacing to the preview.");
+    out.innerHTML = rows.join("");
+    sum.textContent = "Sandbox checks: " + ok + " ok, " + fail + " failing";
+    sum.style.color = fail ? "#ffb4a8" : "#9be7b0";
+  }
+  setTimeout(function () { testMenu(); render(); }, 400);
+  document.addEventListener("scroll", render, true);
+  window.addEventListener("resize", function () { setTimeout(function () { testMenu(); render(); }, 150); });
+})();
+</script>
+<!-- ===== END SANDBOX DIAGNOSTICS ===== -->

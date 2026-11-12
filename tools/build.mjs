@@ -101,5 +101,16 @@ ${sections.filter((s) => s.name.startsWith("99-")).map((s) => s.html).join("\n")
 </body></html>
 `;
 fs.writeFileSync(path.join(out, "preview.html"), preview);
+
+// --- Sandbox: everything in ONE Custom Code element + self-diagnosing panel (never ship) ---
+const panel = read(path.join(root, "tools", "sandbox-panel.html")).replace(/__P__/g, P);
+const sbxBody = [...sections.filter((x) => !x.name.startsWith("99-")), ...sections.filter((x) => x.name.startsWith("99-"))].map((x) => x.html).join("\n");
+fs.writeFileSync(path.join(out, "sandbox-test.html"),
+`<!-- SANDBOX TEST: paste this whole file into ONE Custom Code element on a throwaway GHL page. Not for real sites. -->
+<style>\n${css}\n</style>
+${sbxBody}
+<script>\n${js}\n</script>
+${panel}`);
+
 warnings.forEach((w) => console.warn("WARNING: " + w));
 console.log(`Built ${template} -> ${path.relative(root, out)} (${sections.length} sections)`);
