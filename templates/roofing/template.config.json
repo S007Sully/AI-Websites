@@ -70,5 +70,8 @@
   ],
   "form_embed_html": "",
   "form_heading": "Request your roof assessment",
-  "form_intro": "Tell us about your roof and the best way to reach you. We'll follow up to confirm a time."
+  "form_intro": "Tell us about your roof and the best way to reach you. We'll follow up to confirm a time.",
+  "css_prefix": "rt",
+  "schema_type": "RoofingContractor",
+  "preview_bg": "#faf7f2"
 }

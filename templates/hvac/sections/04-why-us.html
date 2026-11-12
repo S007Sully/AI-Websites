@@ -1,0 +1,18 @@
+<!-- RT: Why us -->
+<section class="hv hv-why" id="hv-why" aria-labelledby="hv-why-title">
+  <div class="hv-wrap">
+    <div class="hv-section-head">
+      <p class="hv-eyebrow">Why {{business_short}}</p>
+      <h2 class="hv-h2" id="hv-why-title">A simpler, more honest HVAC experience.</h2>
+      <p class="hv-section-head__lead">Heating and cooling problems are stressful. Here&rsquo;s how we make them easier.</p>
+    </div>
+    <ul class="hv-why__grid">
+{{why_list}}
+    </ul>
+{{#if credentials}}
+    <ul class="hv-creds" aria-label="Credentials">
+{{creds_list}}
+    </ul>
+{{/if}}
+  </div>
+</section>

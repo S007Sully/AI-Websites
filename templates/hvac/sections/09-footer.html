@@ -1,0 +1,49 @@
+<!-- RT: Footer -->
+<footer class="hv hv-footer">
+  <div class="hv-wrap">
+    <div class="hv-footer__grid">
+      <div class="hv-footer__brand">
+        <p class="hv-footer__name">{{business_name}}</p>
+        <p class="hv-footer__blurb">Heating, cooling and air quality service for homeowners in {{service_area}}.</p>
+{{#if license_line}}
+        <p class="hv-footer__license">{{license_line}}</p>
+{{/if}}
+      </div>
+      <nav class="hv-footer__col" aria-label="Footer">
+        <h2 class="hv-footer__h">Explore</h2>
+        <ul>
+          <li><a href="#hv-services">Services</a></li>
+          <li><a href="#hv-why">Why {{business_short}}</a></li>
+{{#if reviews}}
+          <li><a href="#hv-reviews">Reviews</a></li>
+{{/if}}
+          <li><a href="#hv-process">How it works</a></li>
+          <li><a href="#hv-faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="hv-footer__col">
+        <h2 class="hv-footer__h">Contact</h2>
+        <ul>
+          <li><a href="tel:{{phone_tel}}">{{phone_display}}</a></li>
+{{#if email}}
+          <li><a href="mailto:{{email}}">{{email}}</a></li>
+{{/if}}
+{{#if address}}
+          <li>{{address}}</li>
+{{/if}}
+{{#if hours}}
+          <li>{{hours}}</li>
+{{/if}}
+          <li><a class="hv-footer__cta" href="{{cta_href}}">{{cta_label}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hv-footer__legal">
+      <p>&copy; {{year}} {{business_name}}. All rights reserved.</p>
+{{#if legal_links}}
+      <p>{{legal_links}}</p>
+{{/if}}
+    </div>
+  </div>
+{{localbusiness_jsonld}}
+</footer>

@@ -50,5 +50,13 @@ Optional: `email`, `address`, `hours`, `license_line`, `credentials[]`, `why_us[
 - "Optimize JavaScript" site setting doesn't delay the script.
 - Anchor `#assessment` scrolls to the form.
 
+## Templates
+| Template | Build | Notes |
+|---|---|---|
+| `roofing` | `node tools/build.mjs roofing --config prospects/<slug>.json` | Charcoal / warm white / copper |
+| `hvac` | `node tools/build.mjs hvac --config prospects/<slug>.json` | Navy / ice / heat-orange, `hv-` prefix. Optional `emergency_line` adds a top bar. Only set it with wording and availability the client has confirmed (don't claim 24/7 unless true). Add `00-topbar.html` as the first Custom Code element when present |
+
+Per-template settings live in its `template.config.json`: `css_prefix`, `schema_type` (schema.org type), `preview_bg`. Hero art is `templates/<t>/hero-visual.html` (replaced by `hero_image_url` when set). HVAC licensing/certification (state license, EPA 608, insurance) varies by state: add to `credentials[]` only after verifying.
+
 ## Adding a section/industry
-Add `sections/NN-name.html`, put CSS in the template stylesheet using `.rt-` classes, rebuild. New industry: copy `templates/roofing`, rename the CSS/JS files to `<industry>.css/.js`.
+Add `sections/NN-name.html`, put CSS in the template stylesheet using `.rt-` classes, rebuild. New industry: copy `templates/hvac`, rename CSS/JS to `<industry>.css/.js`, pick a unique `css_prefix`, then rewrite sections, palette, icons and `hero-visual.html`.

@@ -1,0 +1,14 @@
+<!--requires:reviews-->
+<!-- RT: Reviews. Only built when real, permissioned reviews are supplied in config. -->
+<section class="hv hv-reviews" id="hv-reviews" aria-labelledby="hv-reviews-title">
+  <div class="hv-wrap">
+    <div class="hv-section-head">
+      <p class="hv-eyebrow">Reviews</p>
+      <h2 class="hv-h2" id="hv-reviews-title">What homeowners say.</h2>
+{{rating_summary_html}}
+    </div>
+    <ul class="hv-reviews__grid">
+{{reviews_list}}
+    </ul>
+  </div>
+</section>

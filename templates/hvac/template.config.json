@@ -1,0 +1,78 @@
+{
+  "_note": "Per-prospect values. Every value below is SAMPLE data. Replace with verified details before sharing a preview. Never publish unverified licenses, years in business, reviews or guarantees.",
+  "business_name": "Evergreen Heating & Air",
+  "business_short": "Evergreen",
+  "city": "Your City",
+  "service_area": "Your City and surrounding areas",
+  "phone_display": "(555) 010-0199",
+  "phone_tel": "+15550100199",
+  "cta_label": "Request HVAC Service",
+  "cta_href": "#assessment",
+  "hero_image_url": "",
+  "hero_image_alt": "Technician servicing a home air conditioner",
+  "trust_points": [
+    "Written quotes before work starts",
+    "Plain-English diagnosis, no pressure",
+    "Careful, clean in-home service"
+  ],
+  "email": "",
+  "address": "",
+  "hours": "",
+  "license_line": "",
+  "privacy_url": "",
+  "terms_url": "",
+  "credentials": [],
+  "why_us": [
+    {
+      "title": "Clear diagnosis",
+      "text": "We find the cause and explain it in plain English before recommending anything."
+    },
+    {
+      "title": "Upfront, written quotes",
+      "text": "Scope, equipment and pricing in writing before any work begins."
+    },
+    {
+      "title": "Honest repair or replace advice",
+      "text": "You see your options, including when a repair is the smarter choice."
+    },
+    {
+      "title": "Respect for your home",
+      "text": "Careful, tidy service from the moment we arrive to the moment we leave."
+    }
+  ],
+  "rating_summary": null,
+  "reviews": [],
+  "faqs": [
+    {
+      "q": "Should I repair or replace my HVAC system?",
+      "a": "It depends on the system's age, condition, repair history and efficiency. A diagnosis shows whether a repair makes sense or replacement is the better long-term value, and you get the reasoning in writing."
+    },
+    {
+      "q": "How often should my system be serviced?",
+      "a": "Manufacturers commonly recommend annual maintenance, ideally before each heating and cooling season. Your technician can advise based on your specific equipment."
+    },
+    {
+      "q": "Why is my AC running but not cooling?",
+      "a": "Common causes include dirty filters or coils, low refrigerant, airflow problems or thermostat issues. A technician should diagnose the cause rather than guess."
+    },
+    {
+      "q": "What happens during a service visit?",
+      "a": "A technician inspects your system, diagnoses the problem, explains the findings and options, and provides a written quote for any recommended work before starting."
+    },
+    {
+      "q": "Can you help me choose a new system?",
+      "a": "Yes. Proper sizing and equipment choice depend on your home and how you use it. We explain the options so you can decide with confidence."
+    },
+    {
+      "q": "What areas do you serve?",
+      "a": "We serve {{service_area}}. Not sure if you're in range? Call or send a request and we'll confirm."
+    }
+  ],
+  "form_embed_html": "",
+  "form_heading": "Request HVAC service",
+  "form_intro": "Tell us what's going on with your heating or cooling and the best way to reach you. We'll follow up to confirm a time.",
+  "css_prefix": "hv",
+  "schema_type": "HVACBusiness",
+  "preview_bg": "#f4f8fb",
+  "emergency_line": ""
+}

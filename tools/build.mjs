@@ -22,23 +22,7 @@ const check = `<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><pa
 
 const heroVisual = cfg.hero_image_url
   ? `      <img src="${esc(cfg.hero_image_url)}" alt="${esc(cfg.hero_image_alt)}" width="1200" height="900" fetchpriority="high">`
-  : `      <svg viewBox="0 0 800 600" role="img" aria-label="Illustration of a residential roofline at sunset" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <linearGradient id="rt-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b3430"/><stop offset=".6" stop-color="#7a4a2a"/><stop offset="1" stop-color="#d08a4a"/></linearGradient>
-          <linearGradient id="rt-roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4541"/><stop offset="1" stop-color="#262321"/></linearGradient>
-          <pattern id="rt-shingle" width="40" height="22" patternUnits="userSpaceOnUse"><path d="M0 21.5h40M20 0v11M0 11h40M0 11V0M40 11V0" stroke="#fff" stroke-opacity=".07" fill="none"/></pattern>
-        </defs>
-        <rect width="800" height="600" fill="url(#rt-sky)"/>
-        <circle cx="610" cy="210" r="70" fill="#f6d9b0" opacity=".9"/>
-        <circle cx="610" cy="210" r="110" fill="#f6d9b0" opacity=".16"/>
-        <path d="M-20 600V430l260-190 260 190V600Z" fill="#1f1c1a" opacity=".55"/>
-        <path d="M120 600V380L430 150l370 270V600Z" fill="url(#rt-roof)"/>
-        <path d="M120 600V380L430 150l370 270V600Z" fill="url(#rt-shingle)"/>
-        <path d="M110 392 430 138l380 282" fill="none" stroke="#d08a4a" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-        <rect x="560" y="210" width="54" height="110" fill="#2e2a27"/><rect x="552" y="200" width="70" height="14" fill="#d08a4a"/>
-        <rect x="300" y="330" width="120" height="86" rx="6" fill="#2e2a27" stroke="#d08a4a" stroke-width="5"/>
-        <path d="M360 330v86M300 373h120" stroke="#d08a4a" stroke-width="3" opacity=".7"/>
-      </svg>`;
+  : read(path.join(tdir, "hero-visual.html")).trimEnd();
 
 const warnings = [];
 const ldJson = (o) => `  <script type="application/ld+json">${JSON.stringify(o).replace(/</g, "\\u003c")}</script>`;
@@ -68,11 +52,13 @@ const values = {
   reviews_list: cfg.reviews.map((r) => `      <li class="rt-review rt-reveal"><figure>${r.rating ? stars(r.rating) : ""}<blockquote><p>&ldquo;${esc(r.text)}&rdquo;</p></blockquote><figcaption><strong>${esc(r.name)}</strong>${r.detail ? `<span>${esc(r.detail)}</span>` : ""}</figcaption></figure></li>`).join("\n"),
   faq_list: faqs.map((f) => `      <details class="rt-faq__item"><summary>${esc(f.q)}</summary><div class="rt-faq__a"><p>${esc(f.a)}</p></div></details>`).join("\n"),
   faq_jsonld: ldJson({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) }),
-  localbusiness_jsonld: ldJson({ "@context": "https://schema.org", "@type": "RoofingContractor", name: cfg.business_name, telephone: cfg.phone_tel, areaServed: cfg.service_area, ...(cfg.email ? { email: cfg.email } : {}) }),
+  localbusiness_jsonld: ldJson({ "@context": "https://schema.org", "@type": cfg.schema_type, name: cfg.business_name, telephone: cfg.phone_tel, areaServed: cfg.service_area, ...(cfg.email ? { email: cfg.email } : {}) }),
   form_block: formBlock,
 };
 // Text fields are escaped; generated markup keys are passed through.
 const rawKeys = new Set(["trust_list", "hero_visual", "cta_href", "why_list", "creds_list", "rating_summary_html", "reviews_list", "faq_list", "faq_jsonld", "localbusiness_jsonld", "form_block", "legal_links", "check_icon"]);
+const P = cfg.css_prefix || "rt";
+if (P !== "rt") for (const k of rawKeys) if (typeof values[k] === "string") values[k] = values[k].replace(/(?<![\w-])rt-/g, P + "-");
 const truthy = (v) => (Array.isArray(v) ? v.length > 0 : !!v);
 const fill = (s) => s
   .replace(/^[ \t]*\{\{#if (\w+)\}\}\n([\s\S]*?)^[ \t]*\{\{\/if\}\}\n?/gm, (m, k, body) => (truthy(values[k]) ? body : ""))
@@ -106,7 +92,7 @@ const preview = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(cfg.business_name)} | Roofing in ${esc(cfg.city)} (PREVIEW)</title>
 <meta name="robots" content="noindex,nofollow">
-<style>html{scroll-behavior:smooth;scroll-padding-top:76px}body{margin:0;background:#faf7f2}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>
+<style>html{scroll-behavior:smooth;scroll-padding-top:76px}body{margin:0;background:${cfg.preview_bg}}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>
 <style>\n${css}\n</style></head>
 <body>
 ${sections.filter((s) => !s.name.startsWith("99-")).map((s) => s.html).join("\n")}
