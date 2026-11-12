@@ -14,5 +14,61 @@
     "Written estimates before work starts",
     "Photo-documented roof inspections",
     "Clear communication from first call to cleanup"
-  ]
+  ],
+  "email": "",
+  "address": "",
+  "hours": "",
+  "license_line": "",
+  "privacy_url": "",
+  "terms_url": "",
+  "credentials": [],
+  "why_us": [
+    {
+      "title": "Straight answers",
+      "text": "A plain-English explanation of what your roof needs, and what it doesn't."
+    },
+    {
+      "title": "Photo-documented findings",
+      "text": "We show you what we see, so decisions are based on facts, not pressure."
+    },
+    {
+      "title": "Written estimates",
+      "text": "Scope, materials and pricing in writing before any work begins."
+    },
+    {
+      "title": "Respect for your property",
+      "text": "Careful site protection and cleanup from first day to last."
+    }
+  ],
+  "rating_summary": null,
+  "reviews": [],
+  "faqs": [
+    {
+      "q": "How do I know if I need a repair or a full replacement?",
+      "a": "It depends on the age, condition and extent of the damage. An assessment shows whether a targeted repair makes sense or whether replacement is the better long-term value, and you get the reasoning in writing."
+    },
+    {
+      "q": "What happens during a roof assessment?",
+      "a": "We inspect the roof surface, flashing, vents and visible decking, take photos, and walk you through the findings. You then receive a written estimate for any recommended work."
+    },
+    {
+      "q": "How long does a roof replacement take?",
+      "a": "Timelines depend on roof size, materials and weather. Your estimate includes the expected schedule so you can plan around it."
+    },
+    {
+      "q": "Can you help with storm or hail damage and insurance?",
+      "a": "We can inspect and document damage with photos to support your claim. Coverage decisions are made by your insurance company."
+    },
+    {
+      "q": "What warranties come with the work?",
+      "a": "Warranty terms depend on the materials selected and the workmanship covered. Details are provided in your written estimate before you decide."
+    },
+    {
+      "q": "What areas do you serve?",
+      "a": "We serve {{service_area}}. Not sure if you're in range? Call or send a request and we'll confirm."
+    }
+  ],
+  "form_embed_html": "",
+  "form_heading": "Request your roof assessment",
+  "form_intro": "Tell us about your roof and the best way to reach you. We'll follow up to confirm a time."
 }

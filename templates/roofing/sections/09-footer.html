@@ -1,0 +1,49 @@
+<!-- RT: Footer -->
+<footer class="rt rt-footer">
+  <div class="rt-wrap">
+    <div class="rt-footer__grid">
+      <div class="rt-footer__brand">
+        <p class="rt-footer__name">{{business_name}}</p>
+        <p class="rt-footer__blurb">Roof repair, replacement and inspections for homeowners in {{service_area}}.</p>
+{{#if license_line}}
+        <p class="rt-footer__license">{{license_line}}</p>
+{{/if}}
+      </div>
+      <nav class="rt-footer__col" aria-label="Footer">
+        <h2 class="rt-footer__h">Explore</h2>
+        <ul>
+          <li><a href="#rt-services">Services</a></li>
+          <li><a href="#rt-why">Why {{business_short}}</a></li>
+{{#if reviews}}
+          <li><a href="#rt-reviews">Reviews</a></li>
+{{/if}}
+          <li><a href="#rt-process">How it works</a></li>
+          <li><a href="#rt-faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="rt-footer__col">
+        <h2 class="rt-footer__h">Contact</h2>
+        <ul>
+          <li><a href="tel:{{phone_tel}}">{{phone_display}}</a></li>
+{{#if email}}
+          <li><a href="mailto:{{email}}">{{email}}</a></li>
+{{/if}}
+{{#if address}}
+          <li>{{address}}</li>
+{{/if}}
+{{#if hours}}
+          <li>{{hours}}</li>
+{{/if}}
+          <li><a class="rt-footer__cta" href="{{cta_href}}">{{cta_label}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rt-footer__legal">
+      <p>&copy; {{year}} {{business_name}}. All rights reserved.</p>
+{{#if legal_links}}
+      <p>{{legal_links}}</p>
+{{/if}}
+    </div>
+  </div>
+{{localbusiness_jsonld}}
+</footer>

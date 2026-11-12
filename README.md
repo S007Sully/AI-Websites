@@ -27,12 +27,21 @@ dist/<slug>/                                output (git-ignored)
 | File | Where it goes |
 |---|---|
 | `00-global.css` | Site/page **Settings → Custom CSS** (or `00-global-styles.html` in a top Custom Code element) |
-| `01-header.html` | Custom Code element, top section |
-| `02-hero.html` | Custom Code element |
-| `03-services.html` | Custom Code element |
-| *(your section)* | Native GHL **form** element; give its section/row the anchor ID `assessment` |
+| `01-header.html` | Custom Code element, top of page |
+| `02-hero.html` … `07-faq.html` | One Custom Code element each, in order (`05-reviews.html` exists only when reviews are supplied) |
+| `08-form.html` | Custom Code element holding the form. Its section carries `id="assessment"`, the target of every CTA |
+| `09-footer.html` | Custom Code element (includes LocalBusiness JSON-LD; FAQ section includes FAQPage JSON-LD) |
 | `99-mobile-bar.html` | Custom Code element at the bottom of the page |
-| `zz-script.html` | Custom Code element at the bottom (or footer tracking code) |
+| `zz-script.html` | Custom Code element at the bottom (menu + reveal animations only; FAQ is native `<details>`) |
+
+## Per-prospect config (`prospects/<slug>.json`)
+Required for a shareable preview: `business_name`, `business_short`, `city`, `service_area`, `phone_display`, `phone_tel`, `trust_points`, `form_embed_html`, `privacy_url`.
+Optional: `email`, `address`, `hours`, `license_line`, `credentials[]`, `why_us[]`, `faqs[]`, `reviews[]`, `rating_summary`, `hero_image_url`.
+
+- **Reviews** are omitted (section + nav + footer link) unless `reviews[]` has real, permissioned reviews. Never paste invented ones. No review schema is emitted.
+- **Form**: in GHL open the form → *Integrate* → copy the embed code into `form_embed_html` (or swap the card contents for a native Form element). Without it the section shows a call-only fallback, **not** a fake form.
+- `credentials` / `license_line` render only when provided. Verify before adding.
+- The build prints warnings for anything missing. `prospects/_qa-fixture.json` holds clearly-labeled SAMPLE content for layout QA only.
 
 ## Must verify in a GHL sandbox page before the first real preview
 - JavaScript in the Custom Code element runs (menu + reveal animations). Without JS the menu stays open and content stays visible, so it degrades safely.

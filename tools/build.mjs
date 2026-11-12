@@ -40,21 +40,55 @@ const heroVisual = cfg.hero_image_url
         <path d="M360 330v86M300 373h120" stroke="#d08a4a" stroke-width="3" opacity=".7"/>
       </svg>`;
 
+const warnings = [];
+const ldJson = (o) => `  <script type="application/ld+json">${JSON.stringify(o).replace(/</g, "\\u003c")}</script>`;
+const stars = (n) => `<span class="rt-stars" role="img" aria-label="${esc(n)} out of 5 stars">${"&#9733;".repeat(Math.max(0, Math.min(5, Math.round(+n))))}</span>`;
+
+const faqs = cfg.faqs.map((f) => ({ q: f.q, a: f.a.replace(/\{\{(\w+)\}\}/g, (m, k) => cfg[k] ?? m) }));
+const rs = cfg.rating_summary;
+const formBlock = cfg.form_embed_html
+  ? `      ${cfg.form_embed_html}`
+  : `      <div class="rt-form__fallback" role="note"><p><strong>Online request form not connected yet.</strong></p><p>Call <a class="rt-link" href="tel:${esc(cfg.phone_tel)}">${esc(cfg.phone_display)}</a> to request your assessment.</p></div>`;
+if (!cfg.form_embed_html) warnings.push("form_embed_html is empty: the form section shows a call-only fallback. Paste the GHL form embed code before sharing.");
+if (!cfg.reviews.length) warnings.push("reviews is empty: the Reviews section (and its nav links) were left out. Add only real, permissioned reviews.");
+if (!cfg.privacy_url) warnings.push("privacy_url is empty: add a privacy policy link before collecting leads.");
+
+const legal = [cfg.privacy_url && `<a href="${esc(cfg.privacy_url)}">Privacy Policy</a>`, cfg.terms_url && `<a href="${esc(cfg.terms_url)}">Terms</a>`].filter(Boolean).join(" &middot; ");
+
 const values = {
   ...cfg,
+  year: new Date().getFullYear(),
+  legal_links: legal,
+  check_icon: check,
   trust_list: cfg.trust_points.map((t) => `        <li>${check}<span>${esc(t)}</span></li>`).join("\n"),
   hero_visual: heroVisual,
+  why_list: cfg.why_us.map((w) => `      <li class="rt-why__item rt-reveal"><span class="rt-why__tick">${check}</span><div><h3>${esc(w.title)}</h3><p>${esc(w.text)}</p></div></li>`).join("\n"),
+  creds_list: cfg.credentials.map((c) => `      <li>${check}<span>${esc(c)}</span></li>`).join("\n"),
+  rating_summary_html: rs ? `      <p class="rt-rating">${stars(rs.rating)} <strong>${esc(rs.rating)}</strong> average from ${esc(rs.count)} reviews on ${esc(rs.source)}</p>` : "",
+  reviews_list: cfg.reviews.map((r) => `      <li class="rt-review rt-reveal"><figure>${r.rating ? stars(r.rating) : ""}<blockquote><p>&ldquo;${esc(r.text)}&rdquo;</p></blockquote><figcaption><strong>${esc(r.name)}</strong>${r.detail ? `<span>${esc(r.detail)}</span>` : ""}</figcaption></figure></li>`).join("\n"),
+  faq_list: faqs.map((f) => `      <details class="rt-faq__item"><summary>${esc(f.q)}</summary><div class="rt-faq__a"><p>${esc(f.a)}</p></div></details>`).join("\n"),
+  faq_jsonld: ldJson({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) }),
+  localbusiness_jsonld: ldJson({ "@context": "https://schema.org", "@type": "RoofingContractor", name: cfg.business_name, telephone: cfg.phone_tel, areaServed: cfg.service_area, ...(cfg.email ? { email: cfg.email } : {}) }),
+  form_block: formBlock,
 };
-// Text fields are escaped; markup keys are passed through.
-const rawKeys = new Set(["trust_list", "hero_visual", "cta_href"]);
-const fill = (s) => s.replace(/\{\{(\w+)\}\}/g, (m, k) => {
-  if (!(k in values)) { throw new Error(`Unresolved placeholder ${m}`); }
-  return rawKeys.has(k) ? values[k] : esc(values[k]);
-});
+// Text fields are escaped; generated markup keys are passed through.
+const rawKeys = new Set(["trust_list", "hero_visual", "cta_href", "why_list", "creds_list", "rating_summary_html", "reviews_list", "faq_list", "faq_jsonld", "localbusiness_jsonld", "form_block", "legal_links", "check_icon"]);
+const truthy = (v) => (Array.isArray(v) ? v.length > 0 : !!v);
+const fill = (s) => s
+  .replace(/^[ \t]*\{\{#if (\w+)\}\}\n([\s\S]*?)^[ \t]*\{\{\/if\}\}\n?/gm, (m, k, body) => (truthy(values[k]) ? body : ""))
+  .replace(/\{\{(\w+)\}\}/g, (m, k) => {
+    if (!(k in values)) { throw new Error(`Unresolved placeholder ${m}`); }
+    return rawKeys.has(k) ? values[k] : esc(values[k]);
+  });
 
 const secDir = path.join(tdir, "sections");
 const files = fs.readdirSync(secDir).filter((f) => f.endsWith(".html")).sort();
-const sections = files.map((f) => ({ name: f, html: fill(read(path.join(secDir, f))) }));
+const sections = files.flatMap((f) => {
+  const src = read(path.join(secDir, f));
+  const req = src.match(/^<!--requires:(\w+)-->\n/);
+  if (req && !truthy(values[req[1]])) return [];
+  return [{ name: f, html: fill(src.replace(/^<!--requires:\w+-->\n/, "")) }];
+});
 const css = read(path.join(tdir, "styles", `${template}.css`));
 const js = read(path.join(tdir, "scripts", `${template}.js`));
 
@@ -68,7 +102,6 @@ for (const s of sections) fs.writeFileSync(path.join(out, "ghl", s.name), s.html
 fs.writeFileSync(path.join(out, "ghl", "zz-script.html"), `<script>\n${js}\n</script>\n`);
 
 // --- Single-file preview (local QA only; not the GHL deliverable) ---
-const stub = `<section class="rt" id="assessment" style="padding:64px 20px 140px;background:#f1ebe2;text-align:center"><p style="font:600 1rem sans-serif;max-width:36rem;margin:0 auto">Preview placeholder: the GHL form embed for "${esc(cfg.cta_label)}" goes in this section (anchor id <code>assessment</code>).</p></section>`;
 const preview = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(cfg.business_name)} | Roofing in ${esc(cfg.city)} (PREVIEW)</title>
@@ -77,10 +110,10 @@ const preview = `<!doctype html>
 <style>\n${css}\n</style></head>
 <body>
 ${sections.filter((s) => !s.name.startsWith("99-")).map((s) => s.html).join("\n")}
-${stub}
 ${sections.filter((s) => s.name.startsWith("99-")).map((s) => s.html).join("\n")}
 <script>\n${js}\n</script>
 </body></html>
 `;
 fs.writeFileSync(path.join(out, "preview.html"), preview);
+warnings.forEach((w) => console.warn("WARNING: " + w));
 console.log(`Built ${template} -> ${path.relative(root, out)} (${sections.length} sections)`);

@@ -1,0 +1,17 @@
+{
+  "_note": "QA ONLY. Placeholder reviews/credentials exist to test layout. NEVER ship these.",
+  "slug": "_qa",
+  "email": "hello@example.com",
+  "address": "123 Sample St, Your City",
+  "hours": "Mon-Fri 8am-5pm",
+  "license_line": "SAMPLE: License # to be verified",
+  "credentials": ["SAMPLE: Credential to be verified", "SAMPLE: Insurance to be verified"],
+  "privacy_url": "#",
+  "terms_url": "#",
+  "rating_summary": {"rating": "5.0", "count": "00", "source": "SAMPLE SOURCE"},
+  "reviews": [
+    {"name": "Reviewer Name", "detail": "Your City", "rating": 5, "text": "SAMPLE REVIEW. Replace with a real, permissioned customer review."},
+    {"name": "Reviewer Name", "detail": "Your City", "rating": 5, "text": "SAMPLE REVIEW. Replace with a real, permissioned customer review, ideally with a specific detail about the job."},
+    {"name": "Reviewer Name", "detail": "Your City", "rating": 5, "text": "SAMPLE REVIEW. Replace with a real, permissioned customer review."}
+  ]
+}
