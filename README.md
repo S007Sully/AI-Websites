@@ -52,6 +52,14 @@ Optional: `email`, `address`, `hours`, `license_line`, `credentials[]`, `why_us[
 
 Caveat: the all-in-one file puts the header in a tall wrapper, so sticky works there even if it would not in the real split layout (one Custom Code element per section: a header in its own short element has nothing to stick within). To test the split case, paste only `01-header.html` into its own element above a tall element and re-check.
 
+## Photos (what makes it look high-end)
+Config keys (all optional; sections/hero upgrade only when supplied):
+- `hero_image_url`: landscape photo, about 1920x1080, of the client's real work or crew. Full-bleed hero with a dark overlay replaces the illustration.
+- `gallery[]`: `{ "url", "alt", "caption" }`. Adds a "Recent work" section (and nav/footer links). First photo is the large lead image. **Use 4 or 6 photos** so the grid fills cleanly.
+- Host images in the GHL **Media Library** and paste their URLs. Don't hotlink other sites.
+- Use only photos you own or have the right to use. Free **Unsplash License** photos are fine; **Unsplash+** photos are a paid license and are not.
+- Compress to about 200-400 KB each (WebP/JPG) so the page stays fast.
+
 ## Production paste (single block)
 GHL test result (roofing, Custom Code element): JS runs, styles load, no errors, sticky header works when the whole page is ONE block. So ship each site as **one** Custom Code element:
 1. `node tools/build.mjs <template> --config prospects/<slug>.json`

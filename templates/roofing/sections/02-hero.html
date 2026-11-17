@@ -1,5 +1,6 @@
 <!-- RT: Hero -->
-<section class="rt rt-hero" id="rt-hero" aria-labelledby="rt-hero-title">
+<section class="rt rt-hero{{hero_class}}" id="rt-hero" aria-labelledby="rt-hero-title">
+{{hero_bg}}
   <div class="rt-wrap rt-hero__grid">
     <div class="rt-hero__copy">
       <p class="rt-eyebrow rt-reveal">Roofing in {{city}}</p>
@@ -9,12 +10,16 @@
         <a class="rt-btn rt-btn--primary rt-btn--lg" href="{{cta_href}}">{{cta_label}}</a>
         <a class="rt-btn rt-btn--ghost rt-btn--lg" href="tel:{{phone_tel}}">Call {{phone_display}}</a>
       </div>
-      <ul class="rt-trust rt-reveal" aria-label="What to expect">
+    </div>
+    <div class="rt-hero__visual rt-reveal">
+{{hero_visual}}
+    </div>
+  </div>
+  <div class="rt-hero__strip">
+    <div class="rt-wrap">
+      <ul class="rt-trust" aria-label="What to expect">
 {{trust_list}}
       </ul>
-    </div>
-    <div class="rt-hero__visual rt-reveal" aria-hidden="false">
-{{hero_visual}}
     </div>
   </div>
 </section>

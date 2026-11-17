@@ -73,5 +73,7 @@
   "form_intro": "Tell us about your roof and the best way to reach you. We'll follow up to confirm a time.",
   "css_prefix": "rt",
   "schema_type": "RoofingContractor",
-  "preview_bg": "#faf7f2"
+  "preview_bg": "#faf7f2",
+  "gallery": [],
+  "hero_photo_mode": true
 }

@@ -74,5 +74,7 @@
   "css_prefix": "hv",
   "schema_type": "HVACBusiness",
   "preview_bg": "#f4f8fb",
-  "emergency_line": ""
+  "emergency_line": "",
+  "gallery": [],
+  "hero_photo_mode": true
 }

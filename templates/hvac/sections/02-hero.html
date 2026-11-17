@@ -1,5 +1,6 @@
 <!-- RT: Hero -->
-<section class="hv hv-hero" id="hv-hero" aria-labelledby="hv-hero-title">
+<section class="hv hv-hero{{hero_class}}" id="hv-hero" aria-labelledby="hv-hero-title">
+  {{hero_bg}}
   <div class="hv-wrap hv-hero__grid">
     <div class="hv-hero__copy">
       <p class="hv-eyebrow hv-reveal">HVAC in {{city}}</p>
@@ -9,12 +10,16 @@
         <a class="hv-btn hv-btn--primary hv-btn--lg" href="{{cta_href}}">{{cta_label}}</a>
         <a class="hv-btn hv-btn--ghost hv-btn--lg" href="tel:{{phone_tel}}">Call {{phone_display}}</a>
       </div>
-      <ul class="hv-trust hv-reveal" aria-label="What to expect">
-{{trust_list}}
-      </ul>
     </div>
     <div class="hv-hero__visual hv-reveal" aria-hidden="false">
 {{hero_visual}}
+    </div>
+  </div>
+  <div class="hv-hero__strip">
+    <div class="hv-wrap">
+      <ul class="hv-trust hv-reveal" aria-label="What to expect">
+{{trust_list}}
+      </ul>
     </div>
   </div>
 </section>

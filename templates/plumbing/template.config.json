@@ -74,5 +74,7 @@
   "css_prefix": "pl",
   "schema_type": "Plumber",
   "preview_bg": "#f2faf9",
-  "emergency_line": ""
+  "emergency_line": "",
+  "gallery": [],
+  "hero_photo_mode": true
 }

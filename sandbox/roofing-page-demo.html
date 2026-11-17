@@ -50,19 +50,29 @@
 .rt-nav__cta{min-height:44px;padding:.6rem 1.2rem;font-size:.95rem}
 
 /* Hero */
-.rt-hero{position:relative;overflow:hidden;background:var(--rt-charcoal);color:var(--rt-warm);padding:56px 0 72px}
+.rt-hero{position:relative;overflow:hidden;background:var(--rt-charcoal);color:var(--rt-warm);padding:56px 0 0}
 .rt-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 420px at 85% 10%,rgba(208,138,74,.22),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.03),transparent 40%);pointer-events:none}
-.rt-hero__grid{position:relative;display:grid;gap:40px;align-items:center}
+.rt-hero__grid{position:relative;display:grid;gap:40px;align-items:center;padding-bottom:56px}
 .rt-eyebrow{font:700 .8rem/1 var(--rt-font);letter-spacing:.16em;text-transform:uppercase;color:var(--rt-copper-bright);margin-bottom:1rem}
 .rt-services .rt-eyebrow{color:var(--rt-copper)}
-.rt-hero__title{font:700 clamp(2.2rem,7vw,3.9rem)/1.06 var(--rt-font-head);letter-spacing:-.01em;margin-bottom:1.1rem;color:var(--rt-warm)}
+.rt-hero__title{font:700 clamp(2.4rem,7vw,4.4rem)/1.04 var(--rt-font-head);letter-spacing:-.01em;margin-bottom:1.1rem;color:var(--rt-warm)}
 .rt-hero__lead{font-size:1.125rem;max-width:34rem;color:rgba(250,247,242,.86);margin-bottom:1.75rem}
 .rt-hero__actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.75rem}
-.rt-trust{display:grid;gap:.6rem}
-.rt-trust li{display:flex;gap:.65rem;align-items:flex-start;font-size:.98rem;color:rgba(250,247,242,.9)}
+.rt-hero__strip{position:relative;background:rgba(0,0,0,.22);border-top:1px solid rgba(250,247,242,.12)}
+.rt-trust{display:grid;gap:0}
+.rt-trust li+li{border-top:1px solid rgba(250,247,242,.1)}
+.rt-trust li{display:flex;gap:.7rem;align-items:center;font-size:.98rem;font-weight:600;color:rgba(250,247,242,.92);padding:16px 0}
 .rt-trust svg{flex:none;width:20px;height:20px;margin-top:2px;color:var(--rt-copper-bright)}
 .rt-hero__visual{position:relative;border-radius:22px;overflow:hidden;background:var(--rt-charcoal-2);box-shadow:0 24px 60px rgba(0,0,0,.4);aspect-ratio:4/3}
 .rt-hero__visual img,.rt-hero__visual svg{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Photo hero (when hero_image_url is set) */
+.rt-hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rt-hero__shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(35,33,32,.94) 0%,rgba(35,33,32,.74) 48%,rgba(35,33,32,.3) 100%),linear-gradient(0deg,rgba(35,33,32,.55),transparent 40%)}
+.rt-hero--photo .rt-hero__visual{display:none}
+.rt-hero--photo .rt-hero__grid{grid-template-columns:1fr;min-height:540px;align-content:center}
+.rt-hero--photo .rt-hero__copy{max-width:40rem}
+@media (max-width:899px){.rt-hero__shade{background:linear-gradient(180deg,rgba(35,33,32,.82),rgba(35,33,32,.9))}}
 
 /* Services */
 .rt-services{background:var(--rt-warm);padding:72px 0 80px}
@@ -87,6 +97,18 @@
 .rt-section-head--light .rt-section-head__lead{color:rgba(250,247,242,.82)}
 .rt-section-head--light .rt-eyebrow{color:var(--rt-copper-bright)}
 .rt-why .rt-eyebrow,.rt-reviews .rt-eyebrow,.rt-faq .rt-eyebrow,.rt-form .rt-eyebrow{color:var(--rt-copper)}
+
+/* Recent work */
+.rt-work{background:var(--rt-charcoal);color:var(--rt-warm);padding:72px 0 80px}
+.rt-work .rt-h2{color:var(--rt-warm)}
+.rt-work .rt-eyebrow{color:var(--rt-copper-bright)}
+.rt-work__grid{display:grid;gap:14px;grid-template-columns:1fr}
+.rt-work__item figure{position:relative;margin:0;height:100%;border-radius:var(--rt-radius);overflow:hidden;background:var(--rt-charcoal-2);aspect-ratio:4/3}
+.rt-work__item img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.rt-work__item:hover img{transform:scale(1.04)}
+.rt-work__item figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 16px 14px;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.72))}
+@media (min-width:640px){.rt-work__grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:900px){.rt-work__grid{grid-template-columns:repeat(3,1fr)}.rt-work{padding:96px 0 104px}.rt-work__item--lead{grid-column:span 2;grid-row:span 2}.rt-work__item--lead figure{aspect-ratio:auto}}
 
 /* Why us */
 .rt-why{background:var(--rt-warm-2);padding:72px 0 80px}
@@ -176,7 +198,10 @@
 
 @media (min-width:640px){.rt-cards{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:900px){
-  .rt-hero{padding:88px 0 104px}
+  .rt-hero{padding:96px 0 0}
+  .rt-hero__grid{padding-bottom:88px}
+  .rt-trust{grid-template-columns:repeat(3,1fr)}
+  .rt-trust li+li{border-top:0;border-left:1px solid rgba(250,247,242,.12);padding-left:28px}
   .rt-hero__grid{grid-template-columns:1.05fr .95fr;gap:56px}
   .rt-cards{grid-template-columns:repeat(3,1fr)}
   .rt-wrap{padding:0 32px}
@@ -229,6 +254,7 @@
 
 <!-- RT: Hero -->
 <section class="rt rt-hero" id="rt-hero" aria-labelledby="rt-hero-title">
+
   <div class="rt-wrap rt-hero__grid">
     <div class="rt-hero__copy">
       <p class="rt-eyebrow rt-reveal">Roofing in Your City</p>
@@ -238,13 +264,8 @@
         <a class="rt-btn rt-btn--primary rt-btn--lg" href="#assessment">Request a Roof Assessment</a>
         <a class="rt-btn rt-btn--ghost rt-btn--lg" href="tel:+15550100199">Call (555) 010-0199</a>
       </div>
-      <ul class="rt-trust rt-reveal" aria-label="What to expect">
-        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Written estimates before work starts</span></li>
-        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Photo-documented roof inspections</span></li>
-        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Clear communication from first call to cleanup</span></li>
-      </ul>
     </div>
-    <div class="rt-hero__visual rt-reveal" aria-hidden="false">
+    <div class="rt-hero__visual rt-reveal">
       <svg viewBox="0 0 800 600" role="img" aria-label="Illustration of a residential roofline at sunset" preserveAspectRatio="xMidYMid slice">
         <defs>
           <linearGradient id="rt-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b3430"/><stop offset=".6" stop-color="#7a4a2a"/><stop offset="1" stop-color="#d08a4a"/></linearGradient>
@@ -262,6 +283,15 @@
         <rect x="300" y="330" width="120" height="86" rx="6" fill="#2e2a27" stroke="#d08a4a" stroke-width="5"/>
         <path d="M360 330v86M300 373h120" stroke="#d08a4a" stroke-width="3" opacity=".7"/>
       </svg>
+    </div>
+  </div>
+  <div class="rt-hero__strip">
+    <div class="rt-wrap">
+      <ul class="rt-trust" aria-label="What to expect">
+        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Written estimates before work starts</span></li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Photo-documented roof inspections</span></li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Clear communication from first call to cleanup</span></li>
+      </ul>
     </div>
   </div>
 </section>

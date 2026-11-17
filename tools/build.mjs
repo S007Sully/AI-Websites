@@ -35,6 +35,7 @@ const formBlock = cfg.form_embed_html
   : `      <div class="rt-form__fallback" role="note"><p><strong>Online request form not connected yet.</strong></p><p>Call <a class="rt-link" href="tel:${esc(cfg.phone_tel)}">${esc(cfg.phone_display)}</a> to request your assessment.</p></div>`;
 if (!cfg.form_embed_html) warnings.push("form_embed_html is empty: the form section shows a call-only fallback. Paste the GHL form embed code before sharing.");
 if (!cfg.reviews.length) warnings.push("reviews is empty: the Reviews section (and its nav links) were left out. Add only real, permissioned reviews.");
+if (!(cfg.gallery || []).length) warnings.push("gallery is empty: the Recent work section was left out. Add only real project photos you have the right to use.");
 if (!cfg.privacy_url) warnings.push("privacy_url is empty: add a privacy policy link before collecting leads.");
 
 const legal = [cfg.privacy_url && `<a href="${esc(cfg.privacy_url)}">Privacy Policy</a>`, cfg.terms_url && `<a href="${esc(cfg.terms_url)}">Terms</a>`].filter(Boolean).join(" &middot; ");
@@ -45,7 +46,10 @@ const values = {
   legal_links: legal,
   check_icon: check,
   trust_list: cfg.trust_points.map((t) => `        <li>${check}<span>${esc(t)}</span></li>`).join("\n"),
-  hero_visual: heroVisual,
+  hero_visual: cfg.hero_image_url && cfg.hero_photo_mode ? "" : heroVisual,
+  hero_class: cfg.hero_image_url && cfg.hero_photo_mode ? " rt-hero--photo" : "",
+  hero_bg: cfg.hero_image_url && cfg.hero_photo_mode ? `  <img class="rt-hero__bg" src="${esc(cfg.hero_image_url)}" alt="" width="1920" height="1080" fetchpriority="high" aria-hidden="true">\n  <div class="rt-hero__shade" aria-hidden="true"></div>` : "",
+  gallery_list: (cfg.gallery || []).map((g, i) => `      <li class="rt-work__item${i === 0 ? " rt-work__item--lead" : ""} rt-reveal"><figure><img src="${esc(g.url)}" alt="${esc(g.alt)}" loading="lazy" decoding="async">${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}</figure></li>`).join("\n"),
   why_list: cfg.why_us.map((w) => `      <li class="rt-why__item rt-reveal"><span class="rt-why__tick">${check}</span><div><h3>${esc(w.title)}</h3><p>${esc(w.text)}</p></div></li>`).join("\n"),
   creds_list: cfg.credentials.map((c) => `      <li>${check}<span>${esc(c)}</span></li>`).join("\n"),
   rating_summary_html: rs ? `      <p class="rt-rating">${stars(rs.rating)} <strong>${esc(rs.rating)}</strong> average from ${esc(rs.count)} reviews on ${esc(rs.source)}</p>` : "",
@@ -56,7 +60,7 @@ const values = {
   form_block: formBlock,
 };
 // Text fields are escaped; generated markup keys are passed through.
-const rawKeys = new Set(["trust_list", "hero_visual", "cta_href", "why_list", "creds_list", "rating_summary_html", "reviews_list", "faq_list", "faq_jsonld", "localbusiness_jsonld", "form_block", "legal_links", "check_icon"]);
+const rawKeys = new Set(["trust_list", "hero_visual", "hero_class", "hero_bg", "gallery_list", "cta_href", "why_list", "creds_list", "rating_summary_html", "reviews_list", "faq_list", "faq_jsonld", "localbusiness_jsonld", "form_block", "legal_links", "check_icon"]);
 const P = cfg.css_prefix || "rt";
 if (P !== "rt") for (const k of rawKeys) if (typeof values[k] === "string") values[k] = values[k].replace(/(?<![\w-])rt-/g, P + "-");
 const truthy = (v) => (Array.isArray(v) ? v.length > 0 : !!v);

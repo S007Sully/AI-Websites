@@ -1,5 +1,6 @@
 <!-- RT: Hero -->
-<section class="pl pl-hero" id="pl-hero" aria-labelledby="pl-hero-title">
+<section class="pl pl-hero{{hero_class}}" id="pl-hero" aria-labelledby="pl-hero-title">
+  {{hero_bg}}
   <div class="pl-wrap pl-hero__grid">
     <div class="pl-hero__copy">
       <p class="pl-eyebrow pl-reveal">Plumbing in {{city}}</p>
@@ -9,12 +10,16 @@
         <a class="pl-btn pl-btn--primary pl-btn--lg" href="{{cta_href}}">{{cta_label}}</a>
         <a class="pl-btn pl-btn--ghost pl-btn--lg" href="tel:{{phone_tel}}">Call {{phone_display}}</a>
       </div>
-      <ul class="pl-trust pl-reveal" aria-label="What to expect">
-{{trust_list}}
-      </ul>
     </div>
     <div class="pl-hero__visual pl-reveal" aria-hidden="false">
 {{hero_visual}}
+    </div>
+  </div>
+  <div class="pl-hero__strip">
+    <div class="pl-wrap">
+      <ul class="pl-trust pl-reveal" aria-label="What to expect">
+{{trust_list}}
+      </ul>
     </div>
   </div>
 </section>
