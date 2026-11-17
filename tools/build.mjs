@@ -112,5 +112,13 @@ ${sbxBody}
 <script>\n${js}\n</script>
 ${panel}`);
 
+// --- Production: the same single Custom Code paste, WITHOUT the diagnostics panel ---
+fs.writeFileSync(path.join(out, "page.html"),
+`<!-- ${cfg.business_name}: paste into ONE Custom Code element (full-width section + row, 0 padding). Form: set form_embed_html in the config. -->
+<style>\n${css}\n</style>
+${sbxBody}
+<script>\n${js}\n</script>
+`);
+
 warnings.forEach((w) => console.warn("WARNING: " + w));
 console.log(`Built ${template} -> ${path.relative(root, out)} (${sections.length} sections)`);

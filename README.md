@@ -52,6 +52,13 @@ Optional: `email`, `address`, `hours`, `license_line`, `credentials[]`, `why_us[
 
 Caveat: the all-in-one file puts the header in a tall wrapper, so sticky works there even if it would not in the real split layout (one Custom Code element per section: a header in its own short element has nothing to stick within). To test the split case, paste only `01-header.html` into its own element above a tall element and re-check.
 
+## Production paste (single block)
+GHL test result (roofing, Custom Code element): JS runs, styles load, no errors, sticky header works when the whole page is ONE block. So ship each site as **one** Custom Code element:
+1. `node tools/build.mjs <template> --config prospects/<slug>.json`
+2. Paste `dist/<slug>/page.html` (no diagnostics) into one Custom Code element. Set the section and row to full width, 0 padding.
+3. Put the GHL form embed code in `form_embed_html` first (Form → Integrate → embed), then rebuild.
+Use `sandbox-test.html` only for testing new templates or GHL changes.
+
 ## Must verify in a GHL sandbox page before the first real preview
 - JavaScript in the Custom Code element runs (menu + reveal animations). Without JS the menu stays open and content stays visible, so it degrades safely.
 - Sticky header: `position: sticky` only works if its GHL section isn't a short container. If it doesn't stick, set the header as the page's native header or accept a static header.
